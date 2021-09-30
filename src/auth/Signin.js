@@ -5,15 +5,14 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Signup = () => {
+const Signin = () => {
     const [values, setValues] = useState({
-        name: '',
         email: '',
         password: '',
         buttonText: 'Submit'
     });
 
-    const { name, email, password, buttonText } = values;
+    const { email, password, buttonText } = values;
 
     const handleChange = (name) => (event) => {
         setValues({...values, [name]: event.target.value});
@@ -24,28 +23,23 @@ const Signup = () => {
         setValues({...values, buttonText: 'Submitting'});
         axios({
             method: 'POST',
-            url: `${process.env.REACT_APP_API}/signup`,
-            data: {name, email, password}
+            url: `${process.env.REACT_APP_API}/signin`,
+            data: { email, password }
         })
         .then(response => {
-            console.log('Signup success', response);
+            console.log('Signin success', response);
             setValues({...values, name: '', email: '', password: '', buttonText: 'Submitted'});
-            toast.success(response.data.message);
+            toast.success(`Hi ${response.data.user.name}! Welcome back.`);
         })
         .catch(error => {
-            console.log('Signup error', error.response.data);
+            console.log('Signin error', error.response.data);
             setValues({...values, buttonText: 'Submit'});
             toast.error(error.response.data.error);
         })
     };
 
-    const signupForm = () => (
+    const signinForm = () => (
         <form>
-            <div className="form-group">
-                <label className="text-muted">Name</label>
-                <input onChange={handleChange('name')} type="text" value={name} className="form-control"></input>
-            </div>
-
             <div className="form-group">
                 <label className="text-muted">E-mail</label>
                 <input onChange={handleChange('email')} type="email" value={email} className="form-control"></input>
@@ -66,11 +60,11 @@ const Signup = () => {
         <Layout>
             <div className="col-md-6 offset-md-3">
                 <ToastContainer />
-                <h1 className="p-5 text-center">Signup</h1>
-                {signupForm()}
+                <h1 className="p-5 text-center">Signin</h1>
+                {signinForm()}
             </div>
         </Layout>
     );
 };
 
-export default Signup;
+export default Signin;
