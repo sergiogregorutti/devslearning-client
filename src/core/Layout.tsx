@@ -1,9 +1,13 @@
-import React, { Fragment } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import React, { Fragment, ReactNode } from 'react';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import { isAuth, signout } from '../auth/helpers';
 
-const Layout = ({children, match, history}) => {
-    const isActive = path => {
+interface Props extends RouteComponentProps {
+    children: ReactNode
+}
+
+const Layout = ({children, match, history}: Props): JSX.Element => {
+    const isActive = (path: string) => {
         if (match.path === path) {
             return { color: '#000' };
         } else {

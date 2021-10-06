@@ -21,6 +21,7 @@ const Reset = ({ match }) => {
         if (token) {
             setValues({ ...values, name, token });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const { name, token, newPassword, buttonText } = values;
