@@ -33,7 +33,7 @@
     "lint": "eslint --ext .jsx,.js src",
     "pre-commit": "npm run lint",
     "pre-push": "npm test",
-    "post-merge": "npm install", 
+    "post-merge": "npm install",
     "post-rewrite": "npm install"
   },
   "eslintConfig": {
