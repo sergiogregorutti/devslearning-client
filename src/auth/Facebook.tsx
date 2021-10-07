@@ -1,9 +1,17 @@
-import React from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import axios from 'axios';
 
-const Facebook = ({ informParent = f => f }) => {
-    const responseFacebook = response => {
+interface FacebookLoginResponse {
+    userID: string;
+    accessToken: string;
+}
+
+interface IFacebook {
+    informParent: Function;
+}
+
+const Facebook = ({ informParent }: IFacebook) => {
+    const responseFacebook = (response: FacebookLoginResponse) => {
         console.log(response);
         axios({
             method: 'POST',
@@ -25,7 +33,7 @@ const Facebook = ({ informParent = f => f }) => {
                 appId={`${process.env.REACT_APP_FACEBOOK_APP_ID}`}
                 autoLoad={false}
                 callback={responseFacebook}
-                render={renderProps => (
+                render={(renderProps: ReactFacebookLoginProps) => (
                     <button onClick={renderProps.onClick} className="btn btn-primary btn-lg btn-block">
                         <i className="fab fa-facebook pr-2"></i> Login with Facebook
                     </button>

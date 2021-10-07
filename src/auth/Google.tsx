@@ -1,9 +1,20 @@
-import React from 'react';
-import GoogleLogin from 'react-google-login';
+import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import axios from 'axios';
 
-const Google = ({ informParent = f => f }) => {
-    const responseGoogle = response => {
+const isGoogleLoginResponse = (response: GoogleLoginResponse | GoogleLoginResponseOffline): response is GoogleLoginResponse => { 
+    return !!response && typeof response === 'object' && !!(response as GoogleLoginResponse).tokenId;
+};
+
+interface IGoogle {
+    informParent: Function;
+}
+
+const Google = ({ informParent }: IGoogle) => {
+    const responseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+        if(!isGoogleLoginResponse(response)) {
+            return;
+        }
+
         console.log(response.tokenId);
         axios({
             method: 'POST',

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, MouseEvent } from 'react';
 import { Redirect } from 'react-router-dom';
 import Layout from '../core/Layout';
 import axios from 'axios';
@@ -16,11 +16,11 @@ const Signup = () => {
 
     const { name, email, password, buttonText } = values;
 
-    const handleChange = (name) => (event) => {
-        setValues({...values, [name]: event.target.value});
+    const handleChange = (name: string) => (event: React.FormEvent<HTMLInputElement>) => {
+        setValues({...values, [name]: event.currentTarget.value});
     };
 
-    const clickSubmit = event => {
+    const clickSubmit = (event: MouseEvent) => {
         event.preventDefault();
         setValues({...values, buttonText: 'Submitting'});
         axios({

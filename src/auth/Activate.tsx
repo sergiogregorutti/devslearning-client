@@ -1,20 +1,31 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, MouseEvent } from 'react';
 import Layout from '../core/Layout';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import { ToastContainer, toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Activate = ({match}) => {
+interface RouteParams {
+    token: string
+}
+
+interface Token {
+    name: string;
+}
+
+const Activate = () => {
     const [values, setValues] = useState({
         name: '',
-        token: '',
-        show: true
+        token: ''
     });
 
+    const params = useParams<RouteParams>();
+
     useEffect(() => {
-        let token = match.params.token;
-        let { name } = jwt.decode(token);
+        let token = params.token;
+        
+        let { name } = jwt.decode(token) as Token;
         console.log('name', name);
         
         if (token) {
@@ -25,9 +36,8 @@ const Activate = ({match}) => {
 
     const { name, token } = values;
 
-    const clickSubmit = event => {
+    const clickSubmit = (event: MouseEvent) => {
         event.preventDefault();
-        setValues({...values, buttonText: 'Submitting'});
         axios({
             method: 'POST',
             url: `${process.env.REACT_APP_API}/account-activation`,
@@ -35,7 +45,6 @@ const Activate = ({match}) => {
         })
         .then(response => {
             console.log('Account activation success', response);
-            setValues({...values, show: false});
             toast.success(response.data.message);
         })
         .catch(error => {

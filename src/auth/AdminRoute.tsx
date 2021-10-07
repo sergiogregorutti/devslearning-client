@@ -1,12 +1,12 @@
 import { Route, Redirect } from 'react-router-dom';
 import { isAuth } from './helpers';
 
-const AdminRoute = ({ component: Component, ...rest }) => (
+const AdminRoute = ({ children, ...rest }: any) => (
     <Route
         {...rest}
         render={props =>
             isAuth() && isAuth().role === 'admin' ? (
-                <Component {...props} />
+                children
             ) : (
                 <Redirect
                     to={{

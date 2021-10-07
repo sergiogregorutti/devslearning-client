@@ -1,11 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, MouseEvent } from 'react';
+import { useParams } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
 import Layout from '../core/Layout';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
-const Reset = ({ match }) => {
+interface RouteParams {
+    token: string
+}
+
+interface Token {
+    name: string;
+}
+
+const Reset = () => {
     // props.match from react router dom
     const [values, setValues] = useState({
         name: '',
@@ -14,9 +23,11 @@ const Reset = ({ match }) => {
         buttonText: 'Reset password'
     });
 
+    const params = useParams<RouteParams>();
+
     useEffect(() => {
-        let token = match.params.token;
-        let { name } = jwt.decode(token);
+        let token = params.token;
+        let { name } = jwt.decode(token) as Token;
         // console.log(name);
         if (token) {
             setValues({ ...values, name, token });
@@ -26,11 +37,11 @@ const Reset = ({ match }) => {
 
     const { name, token, newPassword, buttonText } = values;
 
-    const handleChange = event => {
-        setValues({ ...values, newPassword: event.target.value });
+    const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+        setValues({ ...values, newPassword: event.currentTarget.value });
     };
 
-    const clickSubmit = event => {
+    const clickSubmit = (event: MouseEvent) => {
         event.preventDefault();
         setValues({ ...values, buttonText: 'Submitting' });
         axios({

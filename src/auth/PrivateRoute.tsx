@@ -1,13 +1,12 @@
-
 import { Route, Redirect } from 'react-router-dom';
 import { isAuth } from './helpers';
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
+const PrivateRoute = ({ children, ...rest }: any) => (
     <Route
         {...rest}
         render={props =>
             isAuth() ? (
-                <Component {...props} />
+                children
             ) : (
                 <Redirect
                     to={{

@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React, { useState, MouseEvent } from 'react';
+import { Link, Redirect, RouteComponentProps } from 'react-router-dom';
 import Layout from '../core/Layout';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { authenticate, isAuth } from './helpers';
 import { ToastContainer, toast } from 'react-toastify';
 import Google from './Google';
 import Facebook from './Facebook';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Signin = ({history}) => {
+const Signin = ({history}: RouteComponentProps) => {
     const [values, setValues] = useState({
         email: '',
         password: '',
@@ -17,17 +17,17 @@ const Signin = ({history}) => {
 
     const { email, password, buttonText } = values;
 
-    const handleChange = (name) => (event) => {
-        setValues({...values, [name]: event.target.value});
+    const handleChange = (name: string) => (event: React.FormEvent<HTMLInputElement>) => {
+        setValues({...values, [name]: event.currentTarget.value});
     };
 
-    const informParent = response => {
+    const informParent = (response: AxiosResponse) => {
         authenticate(response, () => {
             isAuth() && isAuth().role === 'admin' ? history.push('/admin') : history.push('/private');
         });
     };
 
-    const clickSubmit = event => {
+    const clickSubmit = (event: MouseEvent) => {
         event.preventDefault();
         setValues({...values, buttonText: 'Submitting'});
         axios({
@@ -39,7 +39,7 @@ const Signin = ({history}) => {
             console.log('Signin success', response);
 
             authenticate(response, () => {
-                setValues({...values, name: '', email: '', password: '', buttonText: 'Submitted'});
+                setValues({...values, email: '', password: '', buttonText: 'Submitted'});
                 // toast.success(`Hi ${response.data.user.name}! Welcome back.`);
                 isAuth() && isAuth().role === 'admin' ? history.push('/admin') : history.push('/private');
             });

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import { useState, MouseEvent } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import Layout from '../core/Layout';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
-const Forgot = ({ history }) => {
+const Forgot = ({ history }: RouteComponentProps) => {
     const [values, setValues] = useState({
         email: '',
         buttonText: 'Request password reset link'
@@ -12,12 +13,12 @@ const Forgot = ({ history }) => {
 
     const { email, buttonText } = values;
 
-    const handleChange = name => event => {
+    const handleChange = (name: string) => (event: React.FormEvent<HTMLInputElement>) => {
         // console.log(event.target.value);
-        setValues({ ...values, [name]: event.target.value });
+        setValues({ ...values, [name]: event.currentTarget.value });
     };
 
-    const clickSubmit = event => {
+    const clickSubmit = (event: MouseEvent) => {
         event.preventDefault();
         setValues({ ...values, buttonText: 'Submitting' });
         axios({

@@ -1,40 +1,41 @@
+import { AxiosResponse } from 'axios';
 import cookie from 'js-cookie';
 
-export const setCookie = (key, value) => {
-    if (window !== 'undefined') {
+export const setCookie = (key: string, value: string) => {
+    if (typeof window !== 'undefined') {
         cookie.set(key, value, {
             expires: 1
         });
     }
 };
 
-export const removeCookie = key => {
-    if (window !== 'undefined') {
+export const removeCookie = (key: string) => {
+    if (typeof window !== 'undefined') {
         cookie.remove(key, {
             expires: 1
         });
     }
 };
 
-export const getCookie = key => {
-    if (window !== 'undefined') {
+export const getCookie = (key: string) => {
+    if (typeof window !== 'undefined') {
         return cookie.get(key);
     }
 };
 
-export const setLocalStorage = (key, value) => {
-    if (window !== 'undefined') {
+export const setLocalStorage = (key: string, value: string) => {
+    if (typeof window !== 'undefined') {
         localStorage.setItem(key, JSON.stringify(value));
     }
 };
 
-export const removeLocalStorage = key => {
-    if (window !== 'undefined') {
+export const removeLocalStorage = (key: string) => {
+    if (typeof window !== 'undefined') {
         localStorage.removeItem(key);
     }
 };
 
-export const authenticate = (response, next) => {
+export const authenticate = (response: AxiosResponse, next: Function) => {
     console.log('AUTHENTICATE HELPER ON SIGNIN RESPONSE', response);
     setCookie('token', response.data.token);
     setLocalStorage('user', response.data.user);
@@ -42,11 +43,11 @@ export const authenticate = (response, next) => {
 };
 
 export const isAuth = () => {
-    if (window !== 'undefined') {
+    if (typeof window !== 'undefined') {
         const cookieChecked = getCookie('token');
         if (cookieChecked) {
             if (localStorage.getItem('user')) {
-                return JSON.parse(localStorage.getItem('user'));
+                return JSON.parse(localStorage.getItem('user') as string);
             } else {
                 return false;
             }
@@ -54,16 +55,16 @@ export const isAuth = () => {
     }
 };
 
-export const signout = next => {
+export const signout = (next: Function) => {
     removeCookie('token');
     removeLocalStorage('user');
     next();
 };
 
-export const updateUser = (response, next) => {
+export const updateUser = (response: AxiosResponse, next: Function) => {
     console.log('UPDATE USER IN LOCALSTORAGE HELPERS', response);
     if (typeof window !== 'undefined') {
-        let auth = JSON.parse(localStorage.getItem('user'));
+        let auth = JSON.parse(localStorage.getItem('user') as string);
         auth = response.data;
         localStorage.setItem('user', JSON.stringify(auth));
     }
