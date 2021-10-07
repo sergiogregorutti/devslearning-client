@@ -1,18 +1,17 @@
-import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import App from './App';
-import Signup from './auth/Signup';
-import Signin from './auth/Signin';
-import Activate from './auth/Activate';
-import Private from './core/Private';
-import Admin from './core/Admin';
-import PrivateRoute from './auth/PrivateRoute';
-import AdminRoute from './auth/AdminRoute';
-import Forgot from './auth/Forgot';
-import Reset from './auth/Reset';
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import App from './App'
+import Signup from './auth/Signup'
+import Signin from './auth/Signin'
+import Activate from './auth/Activate'
+import Private from './core/Private'
+import Admin from './core/Admin'
+import PrivateRoute from './auth/PrivateRoute'
+import AdminRoute from './auth/AdminRoute'
+import Forgot from './auth/Forgot'
+import Reset from './auth/Reset'
 
 const Routes = () => {
-    return (
+  return (
         <BrowserRouter>
             <Switch>
                 <Route path="/" exact component={App} />
@@ -25,7 +24,7 @@ const Routes = () => {
                 <Route path="/auth/password/reset/:token" exact component={Reset} />
             </Switch>
         </BrowserRouter>
-    );
-};
+  )
+}
 
-export default Routes;
+export default Routes
