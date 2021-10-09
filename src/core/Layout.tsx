@@ -1,6 +1,7 @@
 import { Fragment, ReactNode } from 'react'
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom'
 import { isAuth, signout } from '../auth/helpers'
+import Header from './partials/Header'
 
 interface Props extends RouteComponentProps {
   children: ReactNode
@@ -72,6 +73,7 @@ const Layout = ({ children, match, history }: Props): JSX.Element => {
 
   return (
     <Fragment>
+      <Header history={history} />
       {nav()}
       <div className="container">
         {children}
