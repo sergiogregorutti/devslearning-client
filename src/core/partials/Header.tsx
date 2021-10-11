@@ -128,7 +128,7 @@ export default function Header ({ history }: HeaderProps) {
 
   const devsLearningLogo = (
     <RouterLink to="/">
-      <img height="34" src="/img/logo.png" />
+      <img height="30" src="/img/logo.svg" />
     </RouterLink>
   )
 
