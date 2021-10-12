@@ -1,5 +1,6 @@
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import axios from 'axios'
+import { Button } from '@mui/material'
 
 interface FacebookLoginResponse {
   userID: string;
@@ -28,15 +29,15 @@ const Facebook = ({ informParent }: IFacebook) => {
       })
   }
   return (
-    <div className="pb-3">
+    <div style={{ marginTop: '10px' }}>
       <FacebookLogin
         appId={`${process.env.REACT_APP_FACEBOOK_APP_ID}`}
         autoLoad={false}
         callback={responseFacebook}
         render={(renderProps: any) => (
-          <button onClick={renderProps.onClick} className="btn btn-primary btn-lg btn-block">
-            <i className="fab fa-facebook pr-2"></i> Login with Facebook
-          </button>
+          <Button onClick={renderProps.onClick} variant="contained" sx={{
+            background: '#3b5998', color: '#fff'
+          }}>Login with Facebook</Button>
         )}
       />
     </div>

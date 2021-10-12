@@ -1,6 +1,6 @@
 import { Fragment, ReactNode } from 'react'
-import { Link, withRouter, RouteComponentProps } from 'react-router-dom'
-import { isAuth, signout } from '../auth/helpers'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { Container } from '@mui/material'
 import Header from './partials/Header'
 
 interface Props extends RouteComponentProps {
@@ -8,76 +8,12 @@ interface Props extends RouteComponentProps {
 }
 
 const Layout = ({ children, match, history }: Props): JSX.Element => {
-  const isActive = (path: string) => {
-    if (match.path === path) {
-      return { color: '#000' }
-    } else {
-      return { color: '#fff' }
-    }
-  }
-
-  const nav = () => (
-    <ul className="nav nav-tabs bg-primary">
-      <li className="nav-item">
-        <Link to="/" className="nav-link" style={isActive('/')}>
-          Home
-        </Link>
-      </li>
-
-      {!isAuth() && (
-        <Fragment>
-          <li className="nav-item">
-            <Link to="/signin" className="nav-link" style={isActive('/signin')}>
-              Signin
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/signup" className="nav-link" style={isActive('/signup')}>
-              Signup
-            </Link>
-          </li>
-        </Fragment>
-
-      )}
-
-      {isAuth() && isAuth().role === 'admin' && (
-        <li className="nav-item">
-          <Link className="nav-link" style={isActive('/admin')} to="/admin">
-            {isAuth().name}
-          </Link>
-        </li>
-      )}
-
-      {isAuth() && isAuth().role === 'subscriber' && (
-        <li className="nav-item">
-          <Link className="nav-link" style={isActive('/private')} to="/private">
-            {isAuth().name}
-          </Link>
-        </li>
-      )}
-
-      {isAuth() && (
-        <li className="nav-item">
-          <span className="nav-link" style={{ cursor: 'pointer', color: '#fff' }} onClick={() => {
-            signout(() => {
-              history.push('/')
-            })
-          }}>
-            Signout
-          </span>
-        </li>
-
-      )}
-    </ul>
-  )
-
   return (
     <Fragment>
       <Header history={history} />
-      {nav()}
-      <div className="container">
+      <Container sx={{ paddingTop: '64px' }}>
         {children}
-      </div>
+      </Container>
     </Fragment>
   )
 }

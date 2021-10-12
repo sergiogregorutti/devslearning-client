@@ -4,6 +4,7 @@ import Layout from '../core/Layout'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
+import { TextField, Button } from '@mui/material'
 
 const Forgot = ({ history }: RouteComponentProps) => {
   const [values, setValues] = useState({
@@ -13,7 +14,7 @@ const Forgot = ({ history }: RouteComponentProps) => {
 
   const { email, buttonText } = values
 
-  const handleChange = (name: string) => (event: React.FormEvent<HTMLInputElement>) => {
+  const handleChange = (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     // console.log(event.target.value);
     setValues({ ...values, [name]: event.currentTarget.value })
   }
@@ -40,15 +41,14 @@ const Forgot = ({ history }: RouteComponentProps) => {
 
   const passwordForgotForm = () => (
     <form>
-      <div className="form-group">
-        <label className="text-muted">Email</label>
-        <input onChange={handleChange('email')} value={email} type="email" className="form-control" />
+      <div>
+        <TextField onChange={handleChange('email')} type="email" value={email} label="E-mail" variant="standard" />
       </div>
 
       <div>
-        <button className="btn btn-primary" onClick={clickSubmit}>
-          {buttonText}
-        </button>
+        <Button onClick={clickSubmit} variant="contained" sx={{
+          marginTop: '20px'
+        }}>{buttonText}</Button>
       </div>
     </form>
   )
@@ -57,7 +57,7 @@ const Forgot = ({ history }: RouteComponentProps) => {
     <Layout>
       <div className="col-md-6 offset-md-3">
         <ToastContainer />
-        <h1 className="p-5 text-center">Forgot password</h1>
+        <h1>Forgot password</h1>
         {passwordForgotForm()}
       </div>
     </Layout>

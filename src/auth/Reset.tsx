@@ -5,6 +5,7 @@ import Layout from '../core/Layout'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
+import { TextField, Button } from '@mui/material'
 
 interface RouteParams {
   token: string
@@ -36,7 +37,7 @@ const Reset = () => {
 
   const { name, token, newPassword, buttonText } = values
 
-  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, newPassword: event.currentTarget.value })
   }
 
@@ -62,31 +63,23 @@ const Reset = () => {
 
   const passwordResetForm = () => (
     <form>
-      <div className="form-group">
-        <label className="text-muted">Email</label>
-        <input
-          onChange={handleChange}
-          value={newPassword}
-          type="password"
-          className="form-control"
-          placeholder="Type new password"
-          required
-        />
+      <div>
+        <TextField onChange={handleChange} type="password" value={newPassword} label="New Password" variant="standard" />
       </div>
 
       <div>
-        <button className="btn btn-primary" onClick={clickSubmit}>
-          {buttonText}
-        </button>
+        <Button onClick={clickSubmit} variant="contained" sx={{
+          marginTop: '20px'
+        }}>{buttonText}</Button>
       </div>
     </form>
   )
 
   return (
     <Layout>
-      <div className="col-md-6 offset-md-3">
+      <div>
         <ToastContainer />
-        <h1 className="p-5 text-center">Hey {name}, Type your new password</h1>
+        <h1>Hey {name}, Type your new password</h1>
         {passwordResetForm()}
       </div>
     </Layout>

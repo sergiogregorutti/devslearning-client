@@ -3,7 +3,8 @@ import Layout from './core/Layout'
 const App = () => {
   return (
     <Layout>
-      <h1>Hello React</h1>
+      <h1>Welcome to DevsLearning!</h1>
+      <p>Courses directory for developers.</p>
     </Layout>
   )
 }

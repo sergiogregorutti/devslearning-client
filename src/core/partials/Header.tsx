@@ -18,29 +18,29 @@ const generateHeadersData = (history: RouteComponentProps['history']) => {
   const headersData: IMenuItem[] = []
   if (!isAuth()) {
     headersData.push({
-      label: 'Signin',
+      label: 'Sign in',
       href: '/signin'
     })
     headersData.push({
-      label: 'Signup',
+      label: 'Sign up',
       href: '/signup'
     })
   }
   if (isAuth() && isAuth().role === 'admin') {
     headersData.push({
-      label: isAuth().name,
+      label: 'Courses',
       href: '/admin'
-    })
-  }
-  if (isAuth() && isAuth().role === 'subscriber') {
-    headersData.push({
-      label: isAuth().name,
-      href: '/private'
     })
   }
   if (isAuth()) {
     headersData.push({
-      label: 'Signout',
+      label: 'My Account',
+      href: '/my-account'
+    })
+  }
+  if (isAuth()) {
+    headersData.push({
+      label: 'Log out',
       href: '',
       callback: () => {
         signout(() => {
@@ -81,7 +81,7 @@ export default function Header ({ history }: HeaderProps) {
 
   const displayDesktop = () => {
     return (
-      <Toolbar sx={{
+      <Toolbar disableGutters={true} sx={{
         display: 'flex',
         justifyContent: 'space-between'
       }}>
@@ -98,7 +98,7 @@ export default function Header ({ history }: HeaderProps) {
       setState((prevState) => ({ ...prevState, drawerOpen: false }))
 
     return (
-      <Toolbar>
+      <Toolbar disableGutters={true}>
         <IconButton
           {...{
             edge: 'start',
@@ -118,7 +118,10 @@ export default function Header ({ history }: HeaderProps) {
             onClose: handleDrawerClose
           }}
         >
-          <div>{getDrawerChoices()}</div>
+          <div style={{ display: 'flex', flexDirection: 'column', minWidth: '250px', padding: '20px' }}>
+            {devsLearningLogo}
+            {getDrawerChoices()}
+          </div>
         </Drawer>
 
         <div>{devsLearningLogo}</div>
@@ -128,7 +131,7 @@ export default function Header ({ history }: HeaderProps) {
 
   const devsLearningLogo = (
     <RouterLink to="/">
-      <img height="30" src="/img/logo.svg" />
+      <img height="30" src="/img/logo.svg" style={{ marginTop: '8px' }} />
     </RouterLink>
   )
 
@@ -141,6 +144,7 @@ export default function Header ({ history }: HeaderProps) {
             onClick={() => {
               callback()
             }}
+            sx={{ textTransform: 'none' }}
           >
             {label}
           </Button>
@@ -154,6 +158,7 @@ export default function Header ({ history }: HeaderProps) {
               to: href,
               component: RouterLink
             }}
+            sx={{ textTransform: 'none' }}
           >
             {label}
           </Button>
@@ -172,6 +177,7 @@ export default function Header ({ history }: HeaderProps) {
               onClick={() => {
                 callback()
               }}
+              sx={{ textTransform: 'none' }}
             >
               {label}
             </Button>
@@ -183,6 +189,7 @@ export default function Header ({ history }: HeaderProps) {
             key={label}
             component={RouterLink}
             to={href}
+            sx={{ textTransform: 'none' }}
           >
             {label}
           </Button>
@@ -192,14 +199,12 @@ export default function Header ({ history }: HeaderProps) {
   }
 
   return (
-    <header>
-      <AppBar sx={{
-        backgroundColor: '#fff'
-      }}>
-        <Container>
-          {mobileView ? displayMobile() : displayDesktop()}
-        </Container>
-      </AppBar>
-    </header>
+    <AppBar sx={{
+      backgroundColor: '#fff', boxShadow: 'none'
+    }}>
+      <Container>
+        {mobileView ? displayMobile() : displayDesktop()}
+      </Container>
+    </AppBar>
   )
 }

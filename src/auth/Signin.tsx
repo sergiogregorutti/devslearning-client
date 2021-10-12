@@ -1,9 +1,10 @@
 import React, { useState, MouseEvent } from 'react'
-import { Link, Redirect, RouteComponentProps } from 'react-router-dom'
+import { Link as RouterLink, Redirect, RouteComponentProps } from 'react-router-dom'
 import Layout from '../core/Layout'
 import axios, { AxiosResponse } from 'axios'
 import { authenticate, isAuth } from './helpers'
 import { ToastContainer, toast } from 'react-toastify'
+import { TextField, Button } from '@mui/material'
 import Google from './Google'
 import Facebook from './Facebook'
 import 'react-toastify/dist/ReactToastify.css'
@@ -17,13 +18,13 @@ const Signin = ({ history }: RouteComponentProps) => {
 
   const { email, password, buttonText } = values
 
-  const handleChange = (name: string) => (event: React.FormEvent<HTMLInputElement>) => {
-    setValues({ ...values, [name]: event.currentTarget.value })
+  const handleChange = (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValues({ ...values, [name]: event.target.value })
   }
 
   const informParent = (response: AxiosResponse) => {
     authenticate(response, () => {
-      isAuth() && isAuth().role === 'admin' ? history.push('/admin') : history.push('/private')
+      history.push('/')
     })
   }
 
@@ -40,8 +41,7 @@ const Signin = ({ history }: RouteComponentProps) => {
 
         authenticate(response, () => {
           setValues({ ...values, email: '', password: '', buttonText: 'Submitted' })
-          // toast.success(`Hi ${response.data.user.name}! Welcome back.`);
-          isAuth() && isAuth().role === 'admin' ? history.push('/admin') : history.push('/private')
+          history.push('/')
         })
       })
       .catch(error => {
@@ -52,36 +52,35 @@ const Signin = ({ history }: RouteComponentProps) => {
   }
 
   const signinForm = () => (
-    <form>
-      <div className="form-group">
-        <label className="text-muted">E-mail</label>
-        <input onChange={handleChange('email')} type="email" value={email} className="form-control"></input>
-      </div>
-
-      <div className="form-group">
-        <label className="text-muted">Password</label>
-        <input onChange={handleChange('password')} type="password" value={password} className="form-control"></input>
+    <form style={{ marginTop: '15px' }}>
+      <div>
+        <TextField onChange={handleChange('email')} type="email" value={email} label="E-mail" variant="standard" />
       </div>
 
       <div>
-        <button onClick={clickSubmit} className="btn btn-primary">{buttonText}</button>
+        <TextField onChange={handleChange('password')} type="password" value={password} label="Password" variant="standard" />
+      </div>
+
+      <div>
+        <Button onClick={clickSubmit} variant="contained" sx={{
+          marginTop: '20px'
+        }}>{buttonText}</Button>
+        <Button variant="text" component={RouterLink} to="/auth/password/forgot" sx={{
+          marginTop: '20px', marginLeft: '10px'
+        }}>Forgot Password</Button>
       </div>
     </form>
   )
 
   return (
     <Layout>
-      <div className="col-md-6 offset-md-3">
+      <div>
         <ToastContainer />
         {isAuth() ? <Redirect to="/" /> : null}
-        <h1 className="p-5 text-center">Signin</h1>
+        <h1>Sign In</h1>
         <Google informParent={informParent} />
         <Facebook informParent={informParent} />
         {signinForm()}
-        <br />
-        <Link to="/auth/password/forgot" className="btn btn-sm btn-outline-danger">
-          Forgot Password
-        </Link>
       </div>
     </Layout>
   )

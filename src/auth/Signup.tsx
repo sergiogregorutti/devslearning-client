@@ -5,6 +5,7 @@ import axios from 'axios'
 import { isAuth } from './helpers'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { TextField, Button } from '@mui/material'
 
 const Signup = () => {
   const [values, setValues] = useState({
@@ -16,7 +17,7 @@ const Signup = () => {
 
   const { name, email, password, buttonText } = values
 
-  const handleChange = (name: string) => (event: React.FormEvent<HTMLInputElement>) => {
+  const handleChange = (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [name]: event.currentTarget.value })
   }
 
@@ -42,33 +43,32 @@ const Signup = () => {
 
   const signupForm = () => (
     <form>
-      <div className="form-group">
-        <label className="text-muted">Name</label>
-        <input onChange={handleChange('name')} type="text" value={name} className="form-control"></input>
-      </div>
-
-      <div className="form-group">
-        <label className="text-muted">E-mail</label>
-        <input onChange={handleChange('email')} type="email" value={email} className="form-control"></input>
-      </div>
-
-      <div className="form-group">
-        <label className="text-muted">Password</label>
-        <input onChange={handleChange('password')} type="password" value={password} className="form-control"></input>
+      <div>
+        <TextField onChange={handleChange('name')} type="text" value={name} label="Name" variant="standard" />
       </div>
 
       <div>
-        <button onClick={clickSubmit} className="btn btn-primary">{buttonText}</button>
+        <TextField onChange={handleChange('email')} type="email" value={email} label="E-mail" variant="standard" />
+      </div>
+
+      <div>
+        <TextField onChange={handleChange('password')} type="password" value={password} label="Password" variant="standard" />
+      </div>
+
+      <div>
+        <Button onClick={clickSubmit} variant="contained" sx={{
+          marginTop: '20px'
+        }}>{buttonText}</Button>
       </div>
     </form>
   )
 
   return (
     <Layout>
-      <div className="col-md-6 offset-md-3">
+      <div>
         <ToastContainer />
         {isAuth() ? <Redirect to="/" /> : null}
-        <h1 className="p-5 text-center">Signup</h1>
+        <h1>Signup</h1>
         {signupForm()}
       </div>
     </Layout>

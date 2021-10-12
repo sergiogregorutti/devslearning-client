@@ -1,12 +1,13 @@
 import React, { useState, useEffect, MouseEvent } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import Layout from '../core/Layout'
+import Layout from './Layout'
 import axios from 'axios'
 import { isAuth, getCookie, signout, updateUser } from '../auth/helpers'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
+import { TextField, Button } from '@mui/material'
 
-const Private = ({ history }: RouteComponentProps) => {
+const MyAccount = ({ history }: RouteComponentProps) => {
   const [values, setValues] = useState({
     role: '',
     name: '',
@@ -44,10 +45,9 @@ const Private = ({ history }: RouteComponentProps) => {
     loadProfile()
   }, [])
 
-  const { role, name, email, password, buttonText } = values
+  const { name, email, password, buttonText } = values
 
-  const handleChange = (name: string) => (event: React.FormEvent<HTMLInputElement>) => {
-    // console.log(event.target.value);
+  const handleChange = (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [name]: event.currentTarget.value })
   }
 
@@ -78,29 +78,22 @@ const Private = ({ history }: RouteComponentProps) => {
 
   const updateForm = () => (
     <form>
-      <div className="form-group">
-        <label className="text-muted">Role</label>
-        <input defaultValue={role} type="text" className="form-control" disabled />
-      </div>
-      <div className="form-group">
-        <label className="text-muted">Name</label>
-        <input onChange={handleChange('name')} value={name} type="text" className="form-control" />
-      </div>
-
-      <div className="form-group">
-        <label className="text-muted">Email</label>
-        <input defaultValue={email} type="email" className="form-control" disabled />
-      </div>
-
-      <div className="form-group">
-        <label className="text-muted">Password</label>
-        <input onChange={handleChange('password')} value={password} type="password" className="form-control" />
+      <div>
+        <TextField onChange={handleChange('name')} type="text" value={name} label="Name" variant="standard" />
       </div>
 
       <div>
-        <button className="btn btn-primary" onClick={clickSubmit}>
-          {buttonText}
-        </button>
+        <TextField onChange={handleChange('email')} type="email" value={email} label="E-mail" variant="standard" disabled />
+      </div>
+
+      <div>
+        <TextField onChange={handleChange('password')} type="password" value={password} label="Password" variant="standard" />
+      </div>
+
+      <div>
+        <Button onClick={clickSubmit} variant="contained" sx={{
+          marginTop: '20px'
+        }}>{buttonText}</Button>
       </div>
     </form>
   )
@@ -117,4 +110,4 @@ const Private = ({ history }: RouteComponentProps) => {
   )
 }
 
-export default Private
+export default MyAccount

@@ -1,5 +1,6 @@
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login'
 import axios from 'axios'
+import { Button } from '@mui/material'
 
 const isGoogleLoginResponse = (response: GoogleLoginResponse | GoogleLoginResponseOffline): response is GoogleLoginResponse => {
   return !!response && typeof response === 'object' && !!(response as GoogleLoginResponse).tokenId
@@ -37,13 +38,9 @@ const Google = ({ informParent }: IGoogle) => {
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
         render={renderProps => (
-          <button
-            onClick={renderProps.onClick}
-            disabled={renderProps.disabled}
-            className="btn btn-danger btn-lg btn-block"
-          >
-            <i className="fab fa-google pr-2"></i> Login with Google
-          </button>
+          <Button onClick={renderProps.onClick} disabled={renderProps.disabled} variant="contained" sx={{
+            background: '#fff', color: '#000', opacity: 0.54
+          }}>Login with Google</Button>
         )}
         cookiePolicy={'single_host_origin'}
       />
