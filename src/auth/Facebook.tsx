@@ -1,6 +1,7 @@
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import axios from 'axios'
 import { Button } from '@mui/material'
+import FacebookIcon from '@mui/icons-material/Facebook'
 
 interface FacebookLoginResponse {
   userID: string;
@@ -8,10 +9,11 @@ interface FacebookLoginResponse {
 }
 
 interface IFacebook {
+  action: String;
   informParent: Function;
 }
 
-const Facebook = ({ informParent }: IFacebook) => {
+const Facebook = ({ action, informParent }: IFacebook) => {
   const responseFacebook = (response: FacebookLoginResponse) => {
     console.log(response)
     axios({
@@ -29,15 +31,31 @@ const Facebook = ({ informParent }: IFacebook) => {
       })
   }
   return (
-    <div style={{ marginTop: '10px' }}>
+    <div style={{ marginTop: '15px' }}>
       <FacebookLogin
         appId={`${process.env.REACT_APP_FACEBOOK_APP_ID}`}
         autoLoad={false}
         callback={responseFacebook}
         render={(renderProps: any) => (
           <Button onClick={renderProps.onClick} variant="contained" sx={{
-            background: '#3b5998', color: '#fff'
-          }}>Login with Facebook</Button>
+            background: '#3b5998',
+            color: '#fff',
+            position: 'relative',
+            textAlign: 'center',
+            width: '100%',
+            paddingLeft: '42px',
+            ':hover': {
+              backgroundColor: '#4767a9'
+            },
+            ' svg': {
+              position: 'absolute',
+              top: '9px',
+              left: '11px'
+            }
+          }}>
+            <FacebookIcon />
+            {action} with Facebook
+          </Button>
         )}
       />
     </div>

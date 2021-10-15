@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Container, AppBar, Toolbar, Button, IconButton, Drawer } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
+import CloseIcon from '@mui/icons-material/Close'
 import { Link as RouterLink, RouteComponentProps } from 'react-router-dom'
 import { isAuth, signout } from '../../auth/helpers'
 
 interface IMenuItem {
   label: string;
   href: string;
+  variant: 'text' | 'contained' | 'outlined' | undefined;
   callback?: Function;
 }
 
@@ -18,30 +20,35 @@ const generateHeadersData = (history: RouteComponentProps['history']) => {
   const headersData: IMenuItem[] = []
   if (!isAuth()) {
     headersData.push({
-      label: 'Sign in',
-      href: '/signin'
+      label: 'Sign In',
+      href: '/signin',
+      variant: 'text'
     })
     headersData.push({
-      label: 'Sign up',
-      href: '/signup'
+      label: 'Create Account',
+      href: '/signup',
+      variant: 'contained'
     })
   }
   if (isAuth() && isAuth().role === 'admin') {
     headersData.push({
       label: 'Courses',
-      href: '/admin'
+      href: '/admin',
+      variant: 'text'
     })
   }
   if (isAuth()) {
     headersData.push({
       label: 'My Account',
-      href: '/my-account'
+      href: '/my-account',
+      variant: 'text'
     })
   }
   if (isAuth()) {
     headersData.push({
-      label: 'Log out',
+      label: 'Log Out',
       href: '',
+      variant: 'text',
       callback: () => {
         signout(() => {
           history.push('/')
@@ -77,7 +84,7 @@ export default function Header ({ history }: HeaderProps) {
     return () => {
       window.removeEventListener('resize', () => setResponsiveness())
     }
-  }, [])
+  }, [headersData])
 
   const displayDesktop = () => {
     return (
@@ -98,7 +105,12 @@ export default function Header ({ history }: HeaderProps) {
       setState((prevState) => ({ ...prevState, drawerOpen: false }))
 
     return (
-      <Toolbar disableGutters={true}>
+      <Toolbar disableGutters={true} sx={{
+        display: 'flex',
+        justifyContent: 'space-between'
+      }}>
+        <div>{devsLearningLogo}</div>
+
         <IconButton
           {...{
             edge: 'start',
@@ -108,38 +120,39 @@ export default function Header ({ history }: HeaderProps) {
             onClick: handleDrawerOpen
           }}
         >
-          <MenuIcon />
+          <MenuIcon sx={{ color: '#1c1c1a' }} />
         </IconButton>
 
         <Drawer
           {...{
-            anchor: 'left',
+            anchor: 'right',
             open: drawerOpen,
             onClose: handleDrawerClose
           }}
         >
           <div style={{ display: 'flex', flexDirection: 'column', minWidth: '250px', padding: '20px' }}>
-            {devsLearningLogo}
+            <div style={{ textAlign: 'right' }}>
+              <CloseIcon onClick={handleDrawerClose} />
+            </div>
             {getDrawerChoices()}
           </div>
         </Drawer>
-
-        <div>{devsLearningLogo}</div>
       </Toolbar>
     )
   }
 
   const devsLearningLogo = (
     <RouterLink to="/">
-      <img height="30" src="/img/logo.svg" style={{ marginTop: '8px' }} />
+      <img height="30" src="/img/logo.svg" style={{ marginTop: '12px' }} />
     </RouterLink>
   )
 
   const getMenuButtons = () => {
-    return headersData.map(({ label, href, callback }: IMenuItem) => {
+    return headersData.map(({ label, href, variant, callback }: IMenuItem) => {
       if (callback !== undefined) {
         return (
           <Button
+            variant={variant}
             key={label}
             onClick={() => {
               callback()
@@ -152,6 +165,7 @@ export default function Header ({ history }: HeaderProps) {
       } else {
         return (
           <Button
+            variant={variant}
             key={label}
             {...{
               color: 'inherit',
@@ -169,10 +183,11 @@ export default function Header ({ history }: HeaderProps) {
 
   const getDrawerChoices = () => {
     if (headersData) {
-      return headersData.map(({ label, href, callback }) => {
+      return headersData.map(({ label, href, variant, callback }) => {
         if (callback !== undefined) {
           return (
             <Button
+              variant={variant}
               key={label}
               onClick={() => {
                 callback()
@@ -186,6 +201,7 @@ export default function Header ({ history }: HeaderProps) {
 
         return (
           <Button
+            variant={variant}
             key={label}
             component={RouterLink}
             to={href}
@@ -202,7 +218,7 @@ export default function Header ({ history }: HeaderProps) {
     <AppBar sx={{
       backgroundColor: '#fff', boxShadow: 'none'
     }}>
-      <Container>
+      <Container sx={{ borderBottom: '1px solid #ccc' }}>
         {mobileView ? displayMobile() : displayDesktop()}
       </Container>
     </AppBar>

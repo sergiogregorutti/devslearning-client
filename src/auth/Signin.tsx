@@ -4,7 +4,7 @@ import Layout from '../core/Layout'
 import axios, { AxiosResponse } from 'axios'
 import { authenticate, isAuth } from './helpers'
 import { ToastContainer, toast } from 'react-toastify'
-import { TextField, Button } from '@mui/material'
+import { Grid, Typography, Divider, TextField, Button } from '@mui/material'
 import Google from './Google'
 import Facebook from './Facebook'
 import 'react-toastify/dist/ReactToastify.css'
@@ -52,23 +52,21 @@ const Signin = ({ history }: RouteComponentProps) => {
   }
 
   const signinForm = () => (
-    <form style={{ marginTop: '15px' }}>
-      <div>
-        <TextField onChange={handleChange('email')} type="email" value={email} label="E-mail" variant="standard" />
-      </div>
-
-      <div>
-        <TextField onChange={handleChange('password')} type="password" value={password} label="Password" variant="standard" />
-      </div>
-
-      <div>
-        <Button onClick={clickSubmit} variant="contained" sx={{
-          marginTop: '20px'
-        }}>{buttonText}</Button>
-        <Button variant="text" component={RouterLink} to="/auth/password/forgot" sx={{
-          marginTop: '20px', marginLeft: '10px'
-        }}>Forgot Password</Button>
-      </div>
+    <form>
+      <Grid container justifyContent="center" spacing={2}>
+        <Grid item lg={7}>
+          <TextField fullWidth onChange={handleChange('email')} type="email" value={email} label="E-mail" variant="standard" margin="dense" />
+          <TextField fullWidth onChange={handleChange('password')} type="password" value={password} label="Password" variant="standard" margin="dense" />
+          <div>
+            <Button onClick={clickSubmit} variant="contained" sx={{
+              marginTop: '20px'
+            }}>{buttonText}</Button>
+            <Button variant="text" component={RouterLink} to="/auth/password/forgot" sx={{
+              marginTop: '20px', marginLeft: '10px'
+            }}>Forgot Password</Button>
+          </div>
+        </Grid>
+      </Grid>
     </form>
   )
 
@@ -77,10 +75,24 @@ const Signin = ({ history }: RouteComponentProps) => {
       <div>
         <ToastContainer />
         {isAuth() ? <Redirect to="/" /> : null}
-        <h1>Sign In</h1>
-        <Google informParent={informParent} />
-        <Facebook informParent={informParent} />
-        {signinForm()}
+
+        <Grid container justifyContent="center" spacing={2}>
+          <Grid item lg={6}>
+            <Typography variant="h1" component="div" gutterBottom sx={{ textAlign: 'center', marginBottom: '40px' }}>
+              Sign In
+            </Typography>
+            <Grid container justifyContent="center" spacing={2}>
+              <Grid item lg={6}>
+                <Google action={'Signin'} informParent={informParent} />
+                <Facebook action={'Signin'} informParent={informParent} />
+              </Grid>
+            </Grid>
+
+            <Divider sx={{ marginTop: '30px', marginBottom: '15px' }}>OR</Divider>
+
+            {signinForm()}
+          </Grid>
+        </Grid>
       </div>
     </Layout>
   )

@@ -1,15 +1,62 @@
 import { createTheme } from '@mui/material/styles'
 import { blueGrey, lightBlue } from '@mui/material/colors'
 export const theme = createTheme({
+  typography: {
+    fontFamily: [
+      'Poppins',
+      'sans-serif'
+    ].join(','),
+    h1: {
+      fontWeight: 'bold',
+      fontSize: '34px',
+      color: '#0b376b'
+    }
+  },
   palette: {
     primary: {
-      main: lightBlue[500],
+      main: '#2097f8',
       light: lightBlue[300],
       dark: lightBlue[700]
     },
     secondary: {
-      main: blueGrey[700],
+      main: '#0b376b',
       light: blueGrey[500]
+    }
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          fontSize: '16px',
+          boxShadow: 'none',
+          minWidth: '120px',
+          transition: 'none',
+          padding: '7px 18px'
+        },
+        contained: {
+          color: '#fff',
+          backgroundColor: '#2097f8',
+          '&:hover': {
+            boxShadow: 'none',
+            backgroundColor: '#0b376b'
+          }
+        },
+        outlined: {
+          padding: '6px 18px',
+          border: '1px solid #2097f8',
+          '&:hover': {
+            border: '1px solid #2097f8'
+          }
+        },
+        text: {
+          color: '#2097f8',
+          '&:hover': {
+            backgroundColor: 'transparent',
+            color: '#0b376b'
+          }
+        }
+      }
     }
   }
 })

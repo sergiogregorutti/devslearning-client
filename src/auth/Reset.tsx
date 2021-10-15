@@ -5,7 +5,7 @@ import Layout from '../core/Layout'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
-import { TextField, Button } from '@mui/material'
+import { Grid, Typography, TextField, Button } from '@mui/material'
 
 interface RouteParams {
   token: string
@@ -63,15 +63,17 @@ const Reset = () => {
 
   const passwordResetForm = () => (
     <form>
-      <div>
-        <TextField onChange={handleChange} type="password" value={newPassword} label="New Password" variant="standard" />
-      </div>
+      <Grid container justifyContent="center" spacing={2}>
+        <Grid item lg={7}>
+          <TextField fullWidth onChange={handleChange} type="password" value={newPassword} label="New Password" variant="standard" margin="dense" />
 
-      <div>
-        <Button onClick={clickSubmit} variant="contained" sx={{
-          marginTop: '20px'
-        }}>{buttonText}</Button>
-      </div>
+          <div>
+            <Button onClick={clickSubmit} variant="contained" sx={{
+              marginTop: '20px'
+            }}>{buttonText}</Button>
+          </div>
+        </Grid>
+      </Grid>
     </form>
   )
 
@@ -79,8 +81,14 @@ const Reset = () => {
     <Layout>
       <div>
         <ToastContainer />
-        <h1>Hey {name}, Type your new password</h1>
-        {passwordResetForm()}
+        <Grid container justifyContent="center" spacing={2}>
+          <Grid item lg={6}>
+            <Typography variant="h1" component="div" gutterBottom sx={{ textAlign: 'center', marginBottom: '40px' }}>
+              {name}, create your new password
+            </Typography>
+            {passwordResetForm()}
+          </Grid>
+        </Grid>
       </div>
     </Layout>
   )

@@ -5,7 +5,7 @@ import axios from 'axios'
 import { isAuth, getCookie, signout, updateUser } from '../auth/helpers'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
-import { TextField, Button } from '@mui/material'
+import { Typography, TextField, Button } from '@mui/material'
 
 const MyAccount = ({ history }: RouteComponentProps) => {
   const [values, setValues] = useState({
@@ -102,8 +102,9 @@ const MyAccount = ({ history }: RouteComponentProps) => {
     <Layout>
       <div className="col-md-6 offset-md-3">
         <ToastContainer />
-        <h1 className="pt-5 text-center">Private</h1>
-        <p className="lead text-center">Profile update</p>
+        <Typography variant="h1" component="div" gutterBottom>
+          My Account
+        </Typography>
         {updateForm()}
       </div>
     </Layout>

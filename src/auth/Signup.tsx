@@ -1,13 +1,15 @@
 import React, { useState, MouseEvent } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, RouteComponentProps } from 'react-router-dom'
 import Layout from '../core/Layout'
-import axios from 'axios'
-import { isAuth } from './helpers'
+import axios, { AxiosResponse } from 'axios'
+import { authenticate, isAuth } from './helpers'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { TextField, Button } from '@mui/material'
+import Google from './Google'
+import Facebook from './Facebook'
+import { Grid, Typography, Divider, TextField, Button } from '@mui/material'
 
-const Signup = () => {
+const Signup = ({ history }: RouteComponentProps) => {
   const [values, setValues] = useState({
     name: '',
     email: '',
@@ -19,6 +21,12 @@ const Signup = () => {
 
   const handleChange = (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [name]: event.currentTarget.value })
+  }
+
+  const informParent = (response: AxiosResponse) => {
+    authenticate(response, () => {
+      history.push('/')
+    })
   }
 
   const clickSubmit = (event: MouseEvent) => {
@@ -43,23 +51,19 @@ const Signup = () => {
 
   const signupForm = () => (
     <form>
-      <div>
-        <TextField onChange={handleChange('name')} type="text" value={name} label="Name" variant="standard" />
-      </div>
+      <Grid container justifyContent="center" spacing={2}>
+        <Grid item lg={7}>
+          <TextField fullWidth onChange={handleChange('name')} type="text" value={name} label="Name" variant="standard" margin="dense" />
+          <TextField fullWidth onChange={handleChange('email')} type="email" value={email} label="E-mail" variant="standard" margin="dense" />
+          <TextField fullWidth onChange={handleChange('password')} type="password" value={password} label="Password" variant="standard" margin="dense" />
 
-      <div>
-        <TextField onChange={handleChange('email')} type="email" value={email} label="E-mail" variant="standard" />
-      </div>
-
-      <div>
-        <TextField onChange={handleChange('password')} type="password" value={password} label="Password" variant="standard" />
-      </div>
-
-      <div>
-        <Button onClick={clickSubmit} variant="contained" sx={{
-          marginTop: '20px'
-        }}>{buttonText}</Button>
-      </div>
+          <div>
+            <Button onClick={clickSubmit} variant="contained" sx={{
+              marginTop: '20px'
+            }}>{buttonText}</Button>
+          </div>
+        </Grid>
+      </Grid>
     </form>
   )
 
@@ -68,8 +72,24 @@ const Signup = () => {
       <div>
         <ToastContainer />
         {isAuth() ? <Redirect to="/" /> : null}
-        <h1>Signup</h1>
-        {signupForm()}
+
+        <Grid container justifyContent="center" spacing={2}>
+          <Grid item lg={6}>
+            <Typography variant="h1" component="div" gutterBottom sx={{ textAlign: 'center', marginBottom: '40px' }}>
+              Create Account
+            </Typography>
+            <Grid container justifyContent="center" spacing={2}>
+              <Grid item lg={6}>
+                <Google action={'Signup'} informParent={informParent} />
+                <Facebook action={'Signup'} informParent={informParent} />
+              </Grid>
+            </Grid>
+
+            <Divider sx={{ marginTop: '30px', marginBottom: '15px' }}>OR</Divider>
+
+            {signupForm()}
+          </Grid>
+        </Grid>
       </div>
     </Layout>
   )

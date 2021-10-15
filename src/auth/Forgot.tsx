@@ -4,7 +4,7 @@ import Layout from '../core/Layout'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
-import { TextField, Button } from '@mui/material'
+import { Grid, Typography, TextField, Button } from '@mui/material'
 
 const Forgot = ({ history }: RouteComponentProps) => {
   const [values, setValues] = useState({
@@ -41,15 +41,17 @@ const Forgot = ({ history }: RouteComponentProps) => {
 
   const passwordForgotForm = () => (
     <form>
-      <div>
-        <TextField onChange={handleChange('email')} type="email" value={email} label="E-mail" variant="standard" />
-      </div>
+      <Grid container justifyContent="center" spacing={2}>
+        <Grid item lg={7}>
+          <TextField fullWidth onChange={handleChange('email')} type="email" value={email} label="E-mail" variant="standard" margin="dense" />
 
-      <div>
-        <Button onClick={clickSubmit} variant="contained" sx={{
-          marginTop: '20px'
-        }}>{buttonText}</Button>
-      </div>
+          <div>
+            <Button onClick={clickSubmit} variant="contained" sx={{
+              marginTop: '20px'
+            }}>{buttonText}</Button>
+          </div>
+        </Grid>
+      </Grid>
     </form>
   )
 
@@ -57,8 +59,14 @@ const Forgot = ({ history }: RouteComponentProps) => {
     <Layout>
       <div className="col-md-6 offset-md-3">
         <ToastContainer />
-        <h1>Forgot password</h1>
-        {passwordForgotForm()}
+        <Grid container justifyContent="center" spacing={2}>
+          <Grid item lg={6}>
+            <Typography variant="h1" component="div" gutterBottom sx={{ textAlign: 'center', marginBottom: '40px' }}>
+              Forgot Password
+            </Typography>
+            {passwordForgotForm()}
+          </Grid>
+        </Grid>
       </div>
     </Layout>
   )
