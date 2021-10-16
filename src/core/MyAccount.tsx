@@ -5,7 +5,7 @@ import axios from 'axios'
 import { isAuth, getCookie, signout, updateUser } from '../auth/helpers'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
-import { Typography, TextField, Button } from '@mui/material'
+import { Grid, Typography, TextField, Button } from '@mui/material'
 
 const MyAccount = ({ history }: RouteComponentProps) => {
   const [values, setValues] = useState({
@@ -78,23 +78,19 @@ const MyAccount = ({ history }: RouteComponentProps) => {
 
   const updateForm = () => (
     <form>
-      <div>
-        <TextField onChange={handleChange('name')} type="text" value={name} label="Name" variant="standard" />
-      </div>
+      <Grid container justifyContent="center" spacing={2}>
+        <Grid item lg={7}>
+          <TextField fullWidth onChange={handleChange('name')} type="text" value={name} label="Name" variant="standard" margin="dense" />
+          <TextField fullWidth onChange={handleChange('email')} type="email" value={email} label="E-mail" variant="standard" disabled margin="dense" />
+          <TextField fullWidth onChange={handleChange('password')} type="password" value={password} label="Password" variant="standard" margin="dense" />
 
-      <div>
-        <TextField onChange={handleChange('email')} type="email" value={email} label="E-mail" variant="standard" disabled />
-      </div>
-
-      <div>
-        <TextField onChange={handleChange('password')} type="password" value={password} label="Password" variant="standard" />
-      </div>
-
-      <div>
-        <Button onClick={clickSubmit} variant="contained" sx={{
-          marginTop: '20px'
-        }}>{buttonText}</Button>
-      </div>
+          <div>
+            <Button onClick={clickSubmit} variant="contained" sx={{
+              marginTop: '20px'
+            }}>{buttonText}</Button>
+          </div>
+        </Grid>
+      </Grid>
     </form>
   )
 
@@ -102,10 +98,15 @@ const MyAccount = ({ history }: RouteComponentProps) => {
     <Layout>
       <div className="col-md-6 offset-md-3">
         <ToastContainer />
-        <Typography variant="h1" component="div" gutterBottom>
-          My Account
-        </Typography>
-        {updateForm()}
+
+        <Grid container justifyContent="center" spacing={2}>
+          <Grid item lg={6}>
+            <Typography variant="h1" component="div" gutterBottom sx={{ textAlign: 'center', marginBottom: '40px' }}>
+              My Account
+            </Typography>
+            {updateForm()}
+          </Grid>
+        </Grid>
       </div>
     </Layout>
   )
