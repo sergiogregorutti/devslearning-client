@@ -38,7 +38,7 @@ const App = () => {
           paddingLeft: { xs: '0 !important', lg: '16px !important' },
           paddingTop: { xs: '0 !important', lg: '16px !important' }
         }}>
-          {matches ? <img src="/img/home_img.svg" /> : <img src="/img/home_img.svg" style={{ height: '220px', marginBottom: '30px' }} />}
+          {matches ? <img src="/img/home_img.svg" /> : <img src="/img/home_img.svg" style={{ height: '220px', marginBottom: '20px', marginTop: '-25px' }} />}
         </Grid>
       </Grid>
     </Layout>
