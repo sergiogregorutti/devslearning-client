@@ -16,49 +16,6 @@ interface HeaderProps {
   history: RouteComponentProps['history'];
 }
 
-const generateHeadersData = (history: RouteComponentProps['history']) => {
-  const headersData: IMenuItem[] = []
-  if (!isAuth()) {
-    headersData.push({
-      label: 'Sign In',
-      href: '/signin',
-      variant: 'text'
-    })
-    headersData.push({
-      label: 'Create Account',
-      href: '/signup',
-      variant: 'contained'
-    })
-  }
-  if (isAuth() && isAuth().role === 'admin') {
-    headersData.push({
-      label: 'Courses',
-      href: '/admin',
-      variant: 'text'
-    })
-  }
-  if (isAuth()) {
-    headersData.push({
-      label: 'My Account',
-      href: '/my-account',
-      variant: 'text'
-    })
-  }
-  if (isAuth()) {
-    headersData.push({
-      label: 'Log Out',
-      href: '',
-      variant: 'text',
-      callback: () => {
-        signout(() => {
-          history.push('/')
-        })
-      }
-    })
-  }
-  return headersData
-}
-
 export default function Header ({ history }: HeaderProps) {
   const [state, setState] = useState({
     mobileView: false,
@@ -84,7 +41,51 @@ export default function Header ({ history }: HeaderProps) {
     return () => {
       window.removeEventListener('resize', () => setResponsiveness())
     }
-  }, [headersData])
+  }, [])
+
+  const generateHeadersData = (history: RouteComponentProps['history']) => {
+    const headersData: IMenuItem[] = []
+    if (!isAuth()) {
+      headersData.push({
+        label: 'Sign In',
+        href: '/signin',
+        variant: 'text'
+      })
+      headersData.push({
+        label: 'Create Account',
+        href: '/signup',
+        variant: 'contained'
+      })
+    }
+    if (isAuth() && isAuth().role === 'admin') {
+      headersData.push({
+        label: 'Courses',
+        href: '/admin',
+        variant: 'text'
+      })
+    }
+    if (isAuth()) {
+      headersData.push({
+        label: 'My Account',
+        href: '/my-account',
+        variant: 'text'
+      })
+    }
+    if (isAuth()) {
+      headersData.push({
+        label: 'Log Out',
+        href: '',
+        variant: 'text',
+        callback: () => {
+          signout(() => {
+            setHeadersData(generateHeadersData(history))
+            history.push('/')
+          })
+        }
+      })
+    }
+    return headersData
+  }
 
   const displayDesktop = () => {
     return (
