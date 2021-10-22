@@ -45,6 +45,11 @@ export default function Header ({ history }: HeaderProps) {
 
   const generateHeadersData = (history: RouteComponentProps['history']) => {
     const headersData: IMenuItem[] = []
+    headersData.push({
+      label: 'Courses',
+      href: '/courses',
+      variant: 'text'
+    })
     if (!isAuth()) {
       headersData.push({
         label: 'Sign In',
