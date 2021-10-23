@@ -23,6 +23,7 @@ export default function Header ({ history }: HeaderProps) {
     drawerOpen: false
   })
   const [headersData, setHeadersData] = useState<IMenuItem[]>([])
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
   const { mobileView, drawerOpen } = state
 
@@ -82,7 +83,6 @@ export default function Header ({ history }: HeaderProps) {
   }
 
   const displayDesktop = () => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       setAnchorEl(event.currentTarget)
