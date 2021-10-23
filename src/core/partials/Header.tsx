@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
-import { Container, AppBar, Toolbar, Button, IconButton, Drawer } from '@mui/material'
+import React, { useState, useEffect } from 'react'
+import { Container, AppBar, Toolbar, Button, IconButton, Drawer, Accordion, AccordionSummary, AccordionDetails, Menu } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { Link as RouterLink, RouteComponentProps } from 'react-router-dom'
 import { isAuth, signout } from '../../auth/helpers'
 
@@ -45,11 +46,6 @@ export default function Header ({ history }: HeaderProps) {
 
   const generateHeadersData = (history: RouteComponentProps['history']) => {
     const headersData: IMenuItem[] = []
-    headersData.push({
-      label: 'Courses',
-      href: '/courses',
-      variant: 'text'
-    })
     if (!isAuth()) {
       headersData.push({
         label: 'Sign In',
@@ -60,13 +56,6 @@ export default function Header ({ history }: HeaderProps) {
         label: 'Create Account',
         href: '/signup',
         variant: 'contained'
-      })
-    }
-    if (isAuth() && isAuth().role === 'admin') {
-      headersData.push({
-        label: 'Courses',
-        href: '/admin',
-        variant: 'text'
       })
     }
     if (isAuth()) {
@@ -93,13 +82,64 @@ export default function Header ({ history }: HeaderProps) {
   }
 
   const displayDesktop = () => {
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+    const open = Boolean(anchorEl)
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget)
+    }
+    const handleClose = () => {
+      setAnchorEl(null)
+    }
+
     return (
       <Toolbar disableGutters={true} sx={{
         display: 'flex',
         justifyContent: 'space-between'
       }}>
         {devsLearningLogo}
-        <div>{getMenuButtons()}</div>
+        <div>
+          {isAuth() && isAuth().role === 'admin' &&
+          <>
+            <Button
+              id="basic-button"
+              aria-controls="basic-menu"
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              onClick={handleClick}
+            >
+              Admin
+            </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button'
+              }}
+            >
+              <div>
+                <Button
+                  component={RouterLink}
+                  to={'admin/categories'}
+                  sx={{ textTransform: 'none' }}
+                >
+                  Categories
+                </Button>
+              </div>
+              <div>
+                <Button
+                  component={RouterLink}
+                  to={'admin/courses'}
+                  sx={{ textTransform: 'none' }}
+                >
+                  Courses
+                </Button>
+              </div>
+            </Menu>
+          </>}
+          {getMenuButtons()}
+        </div>
       </Toolbar>
     )
   }
@@ -140,6 +180,45 @@ export default function Header ({ history }: HeaderProps) {
             <div style={{ textAlign: 'right' }}>
               <CloseIcon onClick={handleDrawerClose} />
             </div>
+            {isAuth() && isAuth().role === 'admin' &&
+            <>
+              <Accordion sx={{
+                boxShadow: 'none',
+                ':before': {
+                  display: 'none'
+                }
+              }}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                >
+                  <Button
+                    sx={{ textTransform: 'none' }}
+                  >
+                    Admin
+                  </Button>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <div>
+                    <Button
+                      component={RouterLink}
+                      to={'admin/categories'}
+                      sx={{ textTransform: 'none' }}
+                    >
+                      Categories
+                    </Button>
+                  </div>
+                  <div>
+                    <Button
+                      component={RouterLink}
+                      to={'admin/courses'}
+                      sx={{ textTransform: 'none' }}
+                    >
+                      Courses
+                    </Button>
+                  </div>
+                </AccordionDetails>
+              </Accordion>
+            </>}
             {getDrawerChoices()}
           </div>
         </Drawer>

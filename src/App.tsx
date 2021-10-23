@@ -17,7 +17,9 @@ const App = () => {
       }}>
         <Grid item sm={6} sx={{
           paddingLeft: { xs: '0 !important', sm: '16px !important' },
-          paddingTop: { xs: '0 !important', sm: '16px !important' }
+          paddingTop: { xs: '0 !important', sm: '16px !important' },
+          display: { sm: 'flex' },
+          alignItems: { sm: 'center' }
         }}>
           <Container sx={{
             padding: { sm: '0 !important' }
