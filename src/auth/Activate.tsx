@@ -1,13 +1,13 @@
-import { useState, useEffect, MouseEvent } from 'react'
-import Layout from '../core/Layout'
-import axios from 'axios'
-import jwt from 'jsonwebtoken'
-import { ToastContainer, toast } from 'react-toastify'
-import { useParams } from 'react-router-dom'
-import 'react-toastify/dist/ReactToastify.css'
+import { useState, useEffect, MouseEvent } from "react";
+import Layout from "../core/Layout";
+import axios from "axios";
+import jwt from "jsonwebtoken";
+import { ToastContainer, toast } from "react-toastify";
+import { useParams } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 
 interface RouteParams {
-  token: string
+  token: string;
 }
 
 interface Token {
@@ -16,41 +16,41 @@ interface Token {
 
 const Activate = () => {
   const [values, setValues] = useState({
-    name: '',
-    token: ''
-  })
+    name: "",
+    token: "",
+  });
 
-  const params = useParams<RouteParams>()
+  const params = useParams<RouteParams>();
 
   useEffect(() => {
-    const token = params.token
+    const token = params.token;
 
-    const { name } = jwt.decode(token) as Token
-    console.log('name', name)
+    const { name } = jwt.decode(token) as Token;
+    console.log("name", name);
 
     if (token) {
-      setValues({ ...values, name, token })
+      setValues({ ...values, name, token });
     }
-  }, [])
+  }, []);
 
-  const { name, token } = values
+  const { name, token } = values;
 
   const clickSubmit = (event: MouseEvent) => {
-    event.preventDefault()
+    event.preventDefault();
     axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_API}/account-activation`,
-      data: { token }
+      data: { token },
     })
-      .then(response => {
-        console.log('Account activation success', response)
-        toast.success(response.data.message)
+      .then((response) => {
+        console.log("Account activation success", response);
+        toast.success(response.data.message);
       })
-      .catch(error => {
-        console.log('Account activation error', error.response.data.error)
-        toast.error(error.response.data.error)
-      })
-  }
+      .catch((error) => {
+        console.log("Account activation error", error.response.data.error);
+        toast.error(error.response.data.error);
+      });
+  };
 
   const activationLink = () => (
     <div className="text-center">
@@ -59,7 +59,7 @@ const Activate = () => {
         Activate Account
       </button>
     </div>
-  )
+  );
 
   return (
     <Layout>
@@ -69,7 +69,7 @@ const Activate = () => {
         {activationLink()}
       </div>
     </Layout>
-  )
-}
+  );
+};
 
-export default Activate
+export default Activate;

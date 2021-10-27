@@ -1,98 +1,130 @@
-import React, { useState, useEffect, MouseEvent } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
-import Layout from './Layout'
-import axios from 'axios'
-import { isAuth, getCookie, signout, updateUser } from '../auth/helpers'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.min.css'
-import { Grid, Typography, TextField, Button } from '@mui/material'
+import React, { useState, useEffect, MouseEvent } from "react";
+import { RouteComponentProps } from "react-router-dom";
+import Layout from "./Layout";
+import axios from "axios";
+import { isAuth, getCookie, signout, updateUser } from "../auth/helpers";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
+import { Grid, Typography, TextField, Button } from "@mui/material";
 
 const MyAccount = ({ history }: RouteComponentProps) => {
   const [values, setValues] = useState({
-    role: '',
-    name: '',
-    email: '',
-    password: '',
-    buttonText: 'Submit'
-  })
+    role: "",
+    name: "",
+    email: "",
+    password: "",
+    buttonText: "Submit",
+  });
 
-  const token = getCookie('token')
+  const token = getCookie("token");
 
   const loadProfile = () => {
     axios({
-      method: 'GET',
+      method: "GET",
       url: `${process.env.REACT_APP_API}/user/${isAuth()._id}`,
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
-      .then(response => {
-        console.log('PRIVATE PROFILE UPDATE', response)
-        const { role, name, email } = response.data
-        setValues({ ...values, role, name, email })
+      .then((response) => {
+        console.log("PRIVATE PROFILE UPDATE", response);
+        const { role, name, email } = response.data;
+        setValues({ ...values, role, name, email });
       })
-      .catch(error => {
-        console.log('PRIVATE PROFILE UPDATE ERROR', error.response.data.error)
+      .catch((error) => {
+        console.log("PRIVATE PROFILE UPDATE ERROR", error.response.data.error);
         if (error.response.status === 401) {
           signout(() => {
-            history.push('/')
-          })
+            history.push("/");
+          });
         }
-      })
-  }
+      });
+  };
 
   useEffect(() => {
-    loadProfile()
-  }, [])
+    loadProfile();
+  }, []);
 
-  const { name, email, password, buttonText } = values
+  const { name, email, password, buttonText } = values;
 
-  const handleChange = (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [name]: event.currentTarget.value })
-  }
+  const handleChange =
+    (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [name]: event.currentTarget.value });
+    };
 
   const clickSubmit = (event: MouseEvent) => {
-    event.preventDefault()
-    setValues({ ...values, buttonText: 'Submitting' })
+    event.preventDefault();
+    setValues({ ...values, buttonText: "Submitting" });
     axios({
-      method: 'PUT',
+      method: "PUT",
       url: `${process.env.REACT_APP_API}/user/update`,
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
-      data: { name, password }
+      data: { name, password },
     })
-      .then(response => {
-        console.log('PRIVATE PROFILE UPDATE SUCCESS', response)
+      .then((response) => {
+        console.log("PRIVATE PROFILE UPDATE SUCCESS", response);
         updateUser(response, () => {
-          setValues({ ...values, buttonText: 'Submitted' })
-          toast.success('Profile updated successfully')
-        })
+          setValues({ ...values, buttonText: "Submitted" });
+          toast.success("Profile updated successfully");
+        });
       })
-      .catch(error => {
-        console.log('PRIVATE PROFILE UPDATE ERROR', error.response.data.error)
-        setValues({ ...values, buttonText: 'Submit' })
-        toast.error(error.response.data.error)
-      })
-  }
+      .catch((error) => {
+        console.log("PRIVATE PROFILE UPDATE ERROR", error.response.data.error);
+        setValues({ ...values, buttonText: "Submit" });
+        toast.error(error.response.data.error);
+      });
+  };
 
   const updateForm = () => (
     <form>
       <Grid container justifyContent="center" spacing={2}>
         <Grid item lg={7}>
-          <TextField fullWidth onChange={handleChange('name')} type="text" value={name} label="Name" variant="standard" margin="dense" />
-          <TextField fullWidth onChange={handleChange('email')} type="email" value={email} label="E-mail" variant="standard" disabled margin="dense" />
-          <TextField fullWidth onChange={handleChange('password')} type="password" value={password} label="Password" variant="standard" margin="dense" />
+          <TextField
+            fullWidth
+            onChange={handleChange("name")}
+            type="text"
+            value={name}
+            label="Name"
+            variant="standard"
+            margin="dense"
+          />
+          <TextField
+            fullWidth
+            onChange={handleChange("email")}
+            type="email"
+            value={email}
+            label="E-mail"
+            variant="standard"
+            disabled
+            margin="dense"
+          />
+          <TextField
+            fullWidth
+            onChange={handleChange("password")}
+            type="password"
+            value={password}
+            label="Password"
+            variant="standard"
+            margin="dense"
+          />
 
           <div>
-            <Button onClick={clickSubmit} variant="contained" sx={{
-              marginTop: '20px'
-            }}>{buttonText}</Button>
+            <Button
+              onClick={clickSubmit}
+              variant="contained"
+              sx={{
+                marginTop: "20px",
+              }}
+            >
+              {buttonText}
+            </Button>
           </div>
         </Grid>
       </Grid>
     </form>
-  )
+  );
 
   return (
     <Layout>
@@ -100,14 +132,19 @@ const MyAccount = ({ history }: RouteComponentProps) => {
 
       <Grid container justifyContent="center" spacing={2}>
         <Grid item lg={6}>
-          <Typography variant="h1" component="div" gutterBottom sx={{ textAlign: 'center', marginBottom: '40px' }}>
+          <Typography
+            variant="h1"
+            component="div"
+            gutterBottom
+            sx={{ textAlign: "center", marginBottom: "40px" }}
+          >
             My Account
           </Typography>
           {updateForm()}
         </Grid>
       </Grid>
     </Layout>
-  )
-}
+  );
+};
 
-export default MyAccount
+export default MyAccount;

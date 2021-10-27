@@ -1,9 +1,9 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { ThemeProvider } from '@mui/material/styles'
-import { theme } from './theme'
-import Routes from './Routes'
-import CssBaseline from '@mui/material/CssBaseline'
+import React from "react";
+import ReactDOM from "react-dom";
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "./theme";
+import Routes from "./Routes";
+import CssBaseline from "@mui/material/CssBaseline";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -12,5 +12,5 @@ ReactDOM.render(
       <Routes />
     </ThemeProvider>
   </React.StrictMode>,
-  document.getElementById('root')
-)
+  document.getElementById("root")
+);

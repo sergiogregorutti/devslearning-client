@@ -1,44 +1,44 @@
 export const createCategory = (token: String, category: Object) => {
   return fetch(`${process.env.REACT_APP_API}/category/create/`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(category)
+    body: JSON.stringify(category),
   })
-    .then(response => {
-      return response.json()
+    .then((response) => {
+      return response.json();
     })
-    .catch(err => {
-      console.log(err)
-    })
-}
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 export const createCourse = (token: String, course: any) => {
   return fetch(`${process.env.REACT_APP_API}/course/create`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      Accept: 'application/json',
-      Authorization: `Bearer ${token}`
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
     },
-    body: course
+    body: course,
   })
-    .then(response => {
-      return response.json()
+    .then((response) => {
+      return response.json();
     })
-    .catch(err => {
-      console.log(err)
-    })
-}
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 export const getCategories = () => {
   return fetch(`${process.env.REACT_APP_API}/categories`, {
-    method: 'GET'
+    method: "GET",
   })
-    .then(response => {
-      return response.json()
+    .then((response) => {
+      return response.json();
     })
-    .catch(err => console.log(err))
-}
+    .catch((err) => console.log(err));
+};
