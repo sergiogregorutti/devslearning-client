@@ -21,7 +21,7 @@ module.exports = {
     '@typescript-eslint'
   ],
   rules: {
-    'max-len': { code: 80 },
+    // 'max-len': [2, 80, 2],
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': 'off'
   },
