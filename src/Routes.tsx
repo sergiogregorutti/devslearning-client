@@ -5,6 +5,8 @@ import Signin from './auth/Signin'
 import Activate from './auth/Activate'
 import MyAccount from './core/MyAccount'
 import Admin from './core/Admin'
+import AddCategory from './admin/AddCategory'
+import AddCourse from './admin/AddCourse'
 import PrivateRoute from './auth/PrivateRoute'
 import AdminRoute from './auth/AdminRoute'
 import Forgot from './auth/Forgot'
@@ -18,10 +20,12 @@ const Routes = () => {
                 <Route path="/signup" component={Signup} />
                 <Route path="/signin" component={Signin} />
                 <Route path="/auth/activate/:token" component={Activate} />
-                <PrivateRoute path="/my-account" component={MyAccount} />
-                <AdminRoute path="/admin" component={Admin} />
                 <Route path="/auth/password/forgot" exact component={Forgot} />
                 <Route path="/auth/password/reset/:token" exact component={Reset} />
+                <PrivateRoute path="/my-account" component={MyAccount} />
+                <AdminRoute path="/admin" exact component={Admin} />
+                <AdminRoute path="/admin/categories/create" exact component={AddCategory} />
+                <AdminRoute path="/admin/courses/create" exact component={AddCourse} />
             </Switch>
         </BrowserRouter>
   )

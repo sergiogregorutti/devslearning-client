@@ -96,18 +96,16 @@ const MyAccount = ({ history }: RouteComponentProps) => {
 
   return (
     <Layout>
-      <div className="col-md-6 offset-md-3">
-        <ToastContainer />
+      <ToastContainer />
 
-        <Grid container justifyContent="center" spacing={2}>
-          <Grid item lg={6}>
-            <Typography variant="h1" component="div" gutterBottom sx={{ textAlign: 'center', marginBottom: '40px' }}>
-              My Account
-            </Typography>
-            {updateForm()}
-          </Grid>
+      <Grid container justifyContent="center" spacing={2}>
+        <Grid item lg={6}>
+          <Typography variant="h1" component="div" gutterBottom sx={{ textAlign: 'center', marginBottom: '40px' }}>
+            My Account
+          </Typography>
+          {updateForm()}
         </Grid>
-      </div>
+      </Grid>
     </Layout>
   )
 }

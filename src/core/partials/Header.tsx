@@ -121,7 +121,7 @@ export default function Header ({ history }: HeaderProps) {
               <div>
                 <Button
                   component={RouterLink}
-                  to={'admin/categories'}
+                  to={'/admin/categories/create'}
                   sx={{ textTransform: 'none' }}
                 >
                   Categories
@@ -130,7 +130,7 @@ export default function Header ({ history }: HeaderProps) {
               <div>
                 <Button
                   component={RouterLink}
-                  to={'admin/courses'}
+                  to={'/admin/courses/create'}
                   sx={{ textTransform: 'none' }}
                 >
                   Courses
@@ -201,7 +201,7 @@ export default function Header ({ history }: HeaderProps) {
                   <div>
                     <Button
                       component={RouterLink}
-                      to={'admin/categories'}
+                      to={'/admin/categories/create'}
                       sx={{ textTransform: 'none' }}
                     >
                       Categories
@@ -210,7 +210,7 @@ export default function Header ({ history }: HeaderProps) {
                   <div>
                     <Button
                       component={RouterLink}
-                      to={'admin/courses'}
+                      to={'/admin/courses/create'}
                       sx={{ textTransform: 'none' }}
                     >
                       Courses
