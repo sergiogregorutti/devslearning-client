@@ -1,12 +1,11 @@
-export const createCategory = (token: String, category: Object) => {
+export const createCategory = (token: String, category: any) => {
   return fetch(`${process.env.REACT_APP_API}/category/create/`, {
     method: "POST",
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(category),
+    body: category,
   })
     .then((response) => {
       return response.json();
