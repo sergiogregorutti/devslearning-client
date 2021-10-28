@@ -112,54 +112,56 @@ const App = () => {
           What do you want to learn?
         </Typography>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-          }}
-        >
-          <Button
-            variant="outlined"
-            component={RouterLink}
-            to="/"
-            sx={{
-              marginTop: "20px",
-            }}
-          >
-            HTML
-          </Button>
-          <Button
-            variant="outlined"
-            component={RouterLink}
-            to="/"
-            sx={{
-              marginTop: "20px",
-            }}
-          >
-            CSS
-          </Button>
-          <Button
-            variant="outlined"
-            component={RouterLink}
-            to="/"
-            sx={{
-              marginTop: "20px",
-            }}
-          >
-            Javascript
-          </Button>
-          <Button
-            variant="outlined"
-            component={RouterLink}
-            to="/"
-            sx={{
-              marginTop: "20px",
-            }}
-          >
-            React
-          </Button>
-        </div>
+        <Grid container justifyContent="center" spacing={2}>
+          <Grid item sm={3}>
+            <Button
+              variant="outlined"
+              component={RouterLink}
+              to="/"
+              sx={{
+                marginTop: "20px",
+              }}
+            >
+              HTML
+            </Button>
+          </Grid>
+          <Grid item sm={3}>
+            <Button
+              variant="outlined"
+              component={RouterLink}
+              to="/"
+              sx={{
+                marginTop: "20px",
+              }}
+            >
+              CSS
+            </Button>
+          </Grid>
+          <Grid item sm={3}>
+            <Button
+              variant="outlined"
+              component={RouterLink}
+              to="/"
+              sx={{
+                marginTop: "20px",
+              }}
+            >
+              Javascript
+            </Button>
+          </Grid>
+          <Grid item sm={3}>
+            <Button
+              variant="outlined"
+              component={RouterLink}
+              to="/"
+              sx={{
+                marginTop: "20px",
+              }}
+            >
+              React
+            </Button>
+          </Grid>
+        </Grid>
       </div>
     </Layout>
   );
