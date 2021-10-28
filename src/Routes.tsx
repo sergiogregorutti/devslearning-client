@@ -5,7 +5,9 @@ import Signin from "./auth/Signin";
 import Activate from "./auth/Activate";
 import MyAccount from "./core/MyAccount";
 import Admin from "./core/Admin";
+import ListCategories from "./admin/ListCategories";
 import AddCategory from "./admin/AddCategory";
+import UpdateCategory from "./admin/UpdateCategory";
 import AddCourse from "./admin/AddCourse";
 import PrivateRoute from "./auth/PrivateRoute";
 import AdminRoute from "./auth/AdminRoute";
@@ -24,10 +26,16 @@ const Routes = () => {
         <Route path="/auth/password/reset/:token" exact component={Reset} />
         <PrivateRoute path="/my-account" component={MyAccount} />
         <AdminRoute path="/admin" exact component={Admin} />
+        <AdminRoute path="/admin/categories" exact component={ListCategories} />
         <AdminRoute
           path="/admin/categories/create"
           exact
           component={AddCategory}
+        />
+        <AdminRoute
+          path="/admin/categories/:categoryId"
+          exact
+          component={UpdateCategory}
         />
         <AdminRoute path="/admin/courses/create" exact component={AddCourse} />
       </Switch>

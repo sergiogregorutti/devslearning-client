@@ -135,7 +135,7 @@ export default function Header({ history }: HeaderProps) {
                 <div>
                   <Button
                     component={RouterLink}
-                    to={"/admin/categories/create"}
+                    to={"/admin/categories"}
                     sx={{ textTransform: "none" }}
                   >
                     Categories
@@ -222,7 +222,7 @@ export default function Header({ history }: HeaderProps) {
                     <div>
                       <Button
                         component={RouterLink}
-                        to={"/admin/categories/create"}
+                        to={"/admin/categories"}
                         sx={{ textTransform: "none" }}
                       >
                         Categories

@@ -1,31 +1,48 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../core/Layout";
 import { isAuth } from "../auth/helpers";
-import { Link as RouterLink } from "react-router-dom";
-import { createCategory } from "./api";
+import { Link as RouterLink, RouteComponentProps } from "react-router-dom";
+import { getCategory, updateCategory } from "./api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { Grid, Typography, TextField, Button } from "@mui/material";
 
-const AddCategory = () => {
-  const [values, setValues] = useState<any>({
+interface MatchParams {
+  categoryId: string;
+}
+
+interface ICategory {
+  name: string;
+  photo: string;
+  formData?: any;
+}
+
+const UpdateCategory = ({ match }: RouteComponentProps<MatchParams>) => {
+  const [values, setValues] = useState<ICategory>({
     name: "",
     photo: "",
-    formData: "",
   });
 
   const { token } = isAuth();
   const { name, formData } = values;
 
-  const init = () => {
-    setValues({
-      ...values,
-      formData: new FormData(),
+  const init = (categoryId: String) => {
+    getCategory(categoryId).then((data: any) => {
+      if (data.error) {
+        toast.error("There is an error loading the category");
+      } else {
+        // populate the state
+        setValues({
+          ...values,
+          name: data.name,
+          formData: new FormData(),
+        });
+      }
     });
   };
 
   useEffect(() => {
-    init();
+    init(match.params.categoryId);
   }, []);
 
   const handleChange = (name: string) => (event: any) => {
@@ -37,21 +54,18 @@ const AddCategory = () => {
   const clickSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    createCategory(token, formData).then((data) => {
-      if (data.error) {
-        toast.error("Category should be unique");
-      } else {
-        setValues({
-          ...values,
-          name: "",
-          photo: "",
-        });
-        toast.success("Category is created");
+    updateCategory(match.params.categoryId, token, formData).then(
+      (data: any) => {
+        if (data.error) {
+          toast.error("The new category name already exist");
+        } else {
+          toast.success("Category updated");
+        }
       }
-    });
+    );
   };
 
-  const newCategoryFom = () => (
+  const updateCategoryFom = () => (
     <form onSubmit={clickSubmit}>
       <Grid container justifyContent="center" spacing={2}>
         <Grid item lg={7}>
@@ -82,7 +96,7 @@ const AddCategory = () => {
                 marginRight: "15px",
               }}
             >
-              Create
+              Update
             </Button>
             <Button
               variant="outlined"
@@ -109,13 +123,13 @@ const AddCategory = () => {
             gutterBottom
             sx={{ textAlign: "center", marginBottom: "40px" }}
           >
-            Create Category
+            Update Category
           </Typography>
-          {newCategoryFom()}
+          {updateCategoryFom()}
         </Grid>
       </Grid>
     </Layout>
   );
 };
 
-export default AddCategory;
+export default UpdateCategory;

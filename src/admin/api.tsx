@@ -15,6 +15,50 @@ export const createCategory = (token: String, category: any) => {
     });
 };
 
+export const getCategory = (categoryId: String) => {
+  return fetch(`${process.env.REACT_APP_API}/category/${categoryId}`, {
+    method: "GET",
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
+export const updateCategory = (
+  categoryId: String,
+  token: String,
+  category: any
+) => {
+  return fetch(`${process.env.REACT_APP_API}/category/${categoryId}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: category,
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
+export const deleteCategory = (categoryId: String, token: String) => {
+  return fetch(`${process.env.REACT_APP_API}/category/${categoryId}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
 export const createCourse = (token: String, course: any) => {
   return fetch(`${process.env.REACT_APP_API}/course/create`, {
     method: "POST",

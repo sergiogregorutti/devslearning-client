@@ -58,6 +58,11 @@ export const theme = createTheme({
             color: "#0b376b",
           },
         },
+        containedSizeSmall: {
+          fontSize: "14px",
+          minWidth: "0",
+          padding: "5px 12px",
+        },
       },
     },
   },
