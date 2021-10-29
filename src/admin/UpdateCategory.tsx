@@ -14,6 +14,7 @@ interface MatchParams {
 interface ICategory {
   name: string;
   photo: string;
+  _id: string;
   formData?: any;
 }
 
@@ -21,20 +22,22 @@ const UpdateCategory = ({ match }: RouteComponentProps<MatchParams>) => {
   const [values, setValues] = useState<ICategory>({
     name: "",
     photo: "",
+    _id: "",
   });
 
   const { token } = isAuth();
-  const { name, formData } = values;
+  const { name, photo, _id, formData } = values;
 
   const init = (categoryId: String) => {
     getCategory(categoryId).then((data: any) => {
       if (data.error) {
         toast.error("There is an error loading the category");
       } else {
-        // populate the state
         setValues({
           ...values,
           name: data.name,
+          photo: data.photo,
+          _id: data._id,
           formData: new FormData(),
         });
       }
@@ -69,6 +72,13 @@ const UpdateCategory = ({ match }: RouteComponentProps<MatchParams>) => {
     <form onSubmit={clickSubmit}>
       <Grid container justifyContent="center" spacing={2}>
         <Grid item lg={7}>
+          {photo && (
+            <img
+              src={`${process.env.REACT_APP_API}/category/photo/${_id}`}
+              alt={name}
+              style={{ height: "50px", marginBottom: "-10px" }}
+            />
+          )}
           <TextField
             fullWidth
             onChange={handleChange("photo")}

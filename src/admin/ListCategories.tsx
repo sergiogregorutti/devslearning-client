@@ -76,6 +76,7 @@ const ListCategories = () => {
             variant="contained"
             component={RouterLink}
             to={"/admin/categories/create"}
+            sx={{ marginBottom: "15px" }}
           >
             Add Category
           </Button>
@@ -95,7 +96,22 @@ const ListCategories = () => {
                       key={category.name}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      <TableCell component="th" scope="row">
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                        }}
+                      >
+                        {category.photo && (
+                          <img
+                            src={`${process.env.REACT_APP_API}/category/photo/${category._id}`}
+                            alt={category.name}
+                            style={{ height: "50px", marginRight: "10px" }}
+                          />
+                        )}
                         {category.name}
                       </TableCell>
                       <TableCell align="center">
