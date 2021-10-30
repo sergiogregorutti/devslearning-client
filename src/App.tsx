@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Layout from "./core/Layout";
 import { useTheme } from "@mui/material/styles";
 import {
@@ -8,10 +9,31 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
+import { getCategories } from "./core/api";
 
 const App = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
+
+  const [categories, setCategories] = useState<any>();
+
+  const loadCategories = () => {
+    getCategories().then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setCategories(data);
+      }
+    });
+  };
+
+  const init = () => {
+    loadCategories();
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
 
   return (
     <Layout>
@@ -61,16 +83,6 @@ const App = () => {
             >
               Course directory for developers.
             </Typography>
-            <Button
-              variant="outlined"
-              component={RouterLink}
-              to="/categories"
-              sx={{
-                marginTop: "20px",
-              }}
-            >
-              Browse courses
-            </Button>
           </Container>
         </Grid>
         <Grid
@@ -98,69 +110,54 @@ const App = () => {
 
       <div
         style={{
-          border: "1px solid #ccc",
           borderRadius: "10px",
           padding: "20px",
+          background: "#f7f7f7",
         }}
       >
         <Typography
           variant="h2"
           gutterBottom
           component="div"
-          sx={{ textAlign: "center" }}
+          sx={{
+            textAlign: "center",
+            marginBottom: { xs: "25px", sm: "40px" },
+            fontSize: { xs: "28px", sm: "40px" },
+          }}
         >
           What do you want to learn?
         </Typography>
 
-        <Grid container justifyContent="center" spacing={2}>
-          <Grid item sm={3}>
-            <Button
-              variant="outlined"
-              component={RouterLink}
-              to="/"
-              sx={{
-                marginTop: "20px",
-              }}
-            >
-              HTML
-            </Button>
-          </Grid>
-          <Grid item sm={3}>
-            <Button
-              variant="outlined"
-              component={RouterLink}
-              to="/"
-              sx={{
-                marginTop: "20px",
-              }}
-            >
-              CSS
-            </Button>
-          </Grid>
-          <Grid item sm={3}>
-            <Button
-              variant="outlined"
-              component={RouterLink}
-              to="/"
-              sx={{
-                marginTop: "20px",
-              }}
-            >
-              Javascript
-            </Button>
-          </Grid>
-          <Grid item sm={3}>
-            <Button
-              variant="outlined"
-              component={RouterLink}
-              to="/"
-              sx={{
-                marginTop: "20px",
-              }}
-            >
-              React
-            </Button>
-          </Grid>
+        <Grid container justifyContent="center" spacing={4}>
+          {categories &&
+            categories.map((category: any) => (
+              <Grid item key={category.name} xs={12} sm={6} lg={3}>
+                <Button
+                  variant="outlined"
+                  component={RouterLink}
+                  to={`/categories/${category._id}`}
+                  sx={{
+                    position: "relative",
+                    fontSize: "20px",
+                    textAlign: "center",
+                    width: "100%",
+                    padding: "13px 10px 13px 42px",
+                    " img": {
+                      position: "absolute",
+                      top: "12px",
+                      left: "13px",
+                    },
+                  }}
+                >
+                  <img
+                    src={`${process.env.REACT_APP_API}/category/photo/${category._id}`}
+                    alt={category.name}
+                    style={{ height: "38px", marginRight: "10px" }}
+                  />
+                  {category.name}
+                </Button>
+              </Grid>
+            ))}
         </Grid>
       </div>
     </Layout>
