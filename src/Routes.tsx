@@ -8,7 +8,9 @@ import Admin from "./core/Admin";
 import ListCategories from "./admin/ListCategories";
 import AddCategory from "./admin/AddCategory";
 import UpdateCategory from "./admin/UpdateCategory";
+import ListCourses from "./admin/ListCourses";
 import AddCourse from "./admin/AddCourse";
+import UpdateCourse from "./admin/UpdateCourse";
 import PrivateRoute from "./auth/PrivateRoute";
 import AdminRoute from "./auth/AdminRoute";
 import Forgot from "./auth/Forgot";
@@ -37,7 +39,13 @@ const Routes = () => {
           exact
           component={UpdateCategory}
         />
+        <AdminRoute path="/admin/courses" exact component={ListCourses} />
         <AdminRoute path="/admin/courses/create" exact component={AddCourse} />
+        <AdminRoute
+          path="/admin/courses/:courseId"
+          exact
+          component={UpdateCourse}
+        />
       </Switch>
     </BrowserRouter>
   );

@@ -144,7 +144,7 @@ export default function Header({ history }: HeaderProps) {
                 <div>
                   <Button
                     component={RouterLink}
-                    to={"/admin/courses/create"}
+                    to={"/admin/courses"}
                     sx={{ textTransform: "none" }}
                   >
                     Courses
@@ -231,7 +231,7 @@ export default function Header({ history }: HeaderProps) {
                     <div>
                       <Button
                         component={RouterLink}
-                        to={"/admin/courses/create"}
+                        to={"/admin/courses"}
                         sx={{ textTransform: "none" }}
                       >
                         Courses

@@ -4,7 +4,7 @@ import { isAuth } from "../auth/helpers";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { Link as RouterLink } from "react-router-dom";
-import { getCategories, deleteCategory } from "./api";
+import { getCourses, deleteCourse } from "./api";
 import {
   Grid,
   Typography,
@@ -17,42 +17,43 @@ import {
   Button,
 } from "@mui/material";
 
-const ListCategories = () => {
+const ListCourses = () => {
   const [values, setValues] = useState<any>({
-    categories: "",
+    courses: "",
   });
 
   const { token } = isAuth();
-  const { categories } = values;
+  const { courses } = values;
 
-  const loadCategories = () => {
-    getCategories().then((data) => {
+  const loadCourses = () => {
+    getCourses().then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
+        console.log("data", data);
         setValues({
           ...values,
-          categories: data,
+          courses: data,
         });
       }
     });
   };
 
   const init = () => {
-    loadCategories();
+    loadCourses();
   };
 
   useEffect(() => {
     init();
   }, []);
 
-  const destroy = (categoryId: String) => {
-    deleteCategory(categoryId, token).then((data) => {
+  const destroy = (coursesId: String) => {
+    deleteCourse(coursesId, token).then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
-        toast.success("Category deleted");
-        loadCategories();
+        toast.success("Course deleted");
+        loadCourses();
       }
     });
   };
@@ -69,31 +70,31 @@ const ListCategories = () => {
             gutterBottom
             sx={{ textAlign: "center", marginBottom: "40px" }}
           >
-            Categories
+            Courses
           </Typography>
 
           <Button
             variant="contained"
             component={RouterLink}
-            to={"/admin/categories/create"}
+            to={"/admin/courses/create"}
             sx={{ marginBottom: "15px" }}
           >
-            Add Category
+            Add Course
           </Button>
 
           <TableContainer>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Category</TableCell>
+                  <TableCell>Course</TableCell>
                   <TableCell align="center">Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {categories &&
-                  categories.map((category: any) => (
+                {courses &&
+                  courses.map((course: any) => (
                     <TableRow
-                      key={category.name}
+                      key={course.name}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
                       <TableCell
@@ -106,18 +107,18 @@ const ListCategories = () => {
                         }}
                       >
                         <img
-                          src={`${process.env.REACT_APP_API}/category/photo/${category._id}`}
-                          alt={category.name}
+                          src={`${process.env.REACT_APP_API}/course/photo/${course._id}`}
+                          alt={course.name}
                           style={{ height: "50px", marginRight: "10px" }}
                         />
-                        {category.name}
+                        {course.name}
                       </TableCell>
                       <TableCell align="center">
                         <Button
                           variant="contained"
                           size="small"
                           component={RouterLink}
-                          to={`/admin/categories/${category._id}`}
+                          to={`/admin/courses/${course._id}`}
                           sx={{ marginRight: "15px" }}
                         >
                           Edit
@@ -125,7 +126,7 @@ const ListCategories = () => {
                         <Button
                           variant="contained"
                           size="small"
-                          onClick={() => destroy(category._id)}
+                          onClick={() => destroy(course._id)}
                           sx={{
                             backgroundColor: "#d21b1b",
                             "&:hover": {
@@ -147,4 +148,4 @@ const ListCategories = () => {
   );
 };
 
-export default ListCategories;
+export default ListCourses;
