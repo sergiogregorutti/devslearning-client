@@ -209,9 +209,6 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
         </Grid>
       </Grid>
       <Grid container justifyContent="center">
-        <Grid item sm={3}>
-          Filters
-        </Grid>
         <Grid item sm={9}>
           {filteredResults.map((course: ICourse, i: number) => (
             <Grid
