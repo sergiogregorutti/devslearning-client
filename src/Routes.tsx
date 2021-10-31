@@ -4,6 +4,7 @@ import Signup from "./auth/Signup";
 import Signin from "./auth/Signin";
 import Activate from "./auth/Activate";
 import MyAccount from "./core/MyAccount";
+import Category from "./core/Category";
 import Admin from "./core/Admin";
 import ListCategories from "./admin/ListCategories";
 import AddCategory from "./admin/AddCategory";
@@ -26,6 +27,9 @@ const Routes = () => {
         <Route path="/auth/activate/:token" component={Activate} />
         <Route path="/auth/password/forgot" exact component={Forgot} />
         <Route path="/auth/password/reset/:token" exact component={Reset} />
+
+        <Route path="/categories/:categoryId" component={Category} />
+
         <PrivateRoute path="/my-account" component={MyAccount} />
         <AdminRoute path="/admin" exact component={Admin} />
         <AdminRoute path="/admin/categories" exact component={ListCategories} />

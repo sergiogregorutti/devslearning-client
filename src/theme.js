@@ -11,7 +11,7 @@ export const theme = createTheme({
     h2: {
       fontWeight: "bold",
       fontSize: "40px",
-      color: "#000",
+      color: "#0b376b",
     },
   },
   palette: {

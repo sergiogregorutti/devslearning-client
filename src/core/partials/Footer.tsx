@@ -34,7 +34,7 @@ export default function Footer() {
             textDecoration: "none",
           }}
         >
-          @floradelucaart
+          @floradeluca.art
         </a>
       </Typography>
     </Container>
