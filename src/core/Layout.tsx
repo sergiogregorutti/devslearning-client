@@ -12,7 +12,9 @@ const Layout = ({ children, match, history }: Props): JSX.Element => {
   return (
     <Fragment>
       <Header history={history} />
-      <Container sx={{ paddingTop: "94px" }}>{children}</Container>
+      <Container sx={{ paddingTop: { xs: "80px", sm: "94px" } }}>
+        {children}
+      </Container>
       <Footer />
     </Fragment>
   );

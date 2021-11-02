@@ -5,7 +5,7 @@ import Layout from "./Layout";
 import { useTheme } from "@mui/material/styles";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import { Button, Chip, Grid, Typography, useMediaQuery } from "@mui/material";
+import { Button, Grid, Typography, useMediaQuery } from "@mui/material";
 
 interface MatchParams {
   categoryId: string;
@@ -110,57 +110,51 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
     switch (value) {
       case "free":
         return (
-          <Chip
+          <Typography
+            variant="body1"
+            component="div"
+            gutterBottom
             sx={{
-              borderRadius: "5px",
-              height: "auto",
-              padding: "5px 10px",
-              marginLeft: "5px",
-              fontSize: "12px",
-              color: "#fff",
-              backgroundColor: "#4cca4c",
-              " span": {
-                padding: "0",
-              },
+              fontSize: "15px",
+              color: "#4CC94D",
+              fontWeight: "bold",
+              marginBottom: "0",
             }}
-            label="Free"
-          />
+          >
+            Free
+          </Typography>
         );
       case "one-time-payment":
         return (
-          <Chip
+          <Typography
+            variant="body1"
+            component="div"
+            gutterBottom
             sx={{
-              borderRadius: "5px",
-              height: "auto",
-              padding: "5px 10px",
-              marginLeft: "5px",
-              fontSize: "12px",
-              color: "#fff",
-              backgroundColor: "#804C20",
-              " span": {
-                padding: "0",
-              },
+              fontSize: "15px",
+              color: "#E5057E",
+              fontWeight: "bold",
+              marginBottom: "0",
             }}
-            label="One Time Payment"
-          />
+          >
+            One Time Payment
+          </Typography>
         );
       case "subscription":
         return (
-          <Chip
+          <Typography
+            variant="body1"
+            component="div"
+            gutterBottom
             sx={{
-              borderRadius: "5px",
-              height: "auto",
-              padding: "5px 10px",
-              marginLeft: "5px",
-              fontSize: "12px",
-              color: "#fff",
-              backgroundColor: "#ED731F",
-              " span": {
-                padding: "0",
-              },
+              fontSize: "15px",
+              color: "#EE741C",
+              fontWeight: "bold",
+              marginBottom: "0",
             }}
-            label="Subscription"
-          />
+          >
+            Subscription
+          </Typography>
         );
     }
   };
@@ -172,10 +166,16 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
       <Grid container justifyContent="center">
         <Grid
           item
+          sm={9}
           sx={{
             display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "left",
+            borderBottom: "1px solid #000",
+            marginBottom: "20px",
+            paddingBottom: "20px",
+            width: "100%",
           }}
         >
           {matches
@@ -183,14 +183,14 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
                 <img
                   src={`${process.env.REACT_APP_API}/category/photo/${category._id}`}
                   alt={category.name}
-                  style={{ height: "70px", marginBottom: "10px" }}
+                  style={{ height: "70px", marginRight: "15px" }}
                 />
               )
             : category && (
                 <img
                   src={`${process.env.REACT_APP_API}/category/photo/${category._id}`}
                   alt={category.name}
-                  style={{ height: "50px", marginBottom: "10px" }}
+                  style={{ height: "50px", marginRight: "10px" }}
                 />
               )}
 
@@ -199,9 +199,8 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
             component="div"
             gutterBottom
             sx={{
-              textAlign: "center",
               fontSize: { xs: "24px", sm: "42px" },
-              marginBottom: "40px",
+              marginBottom: "0",
             }}
           >
             {category && category.name}
@@ -217,7 +216,7 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
               justifyContent="center"
               sx={{
                 borderRadius: "10px",
-                padding: "20px",
+                padding: { xs: "20px", sm: "20px 20px 20px 0" },
                 background: "#f7f7f7",
                 marginBottom: "15px",
               }}
@@ -228,8 +227,8 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
+                  justifyContent: "start",
+                  alignItems: { xs: "start", sm: "center" },
                   marginBottom: { xs: "15px", sm: "0" },
                 }}
               >
@@ -238,7 +237,6 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
                   alt={course.name}
                   style={{
                     width: "80%",
-                    paddingRight: "15px",
                   }}
                 />
               </Grid>
@@ -251,19 +249,29 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
                   justifyContent: "center",
                 }}
               >
+                {renderPricing(course.pricing)}
                 <Typography
                   variant="h2"
                   component="div"
                   gutterBottom
-                  sx={{ fontSize: "18px", marginBottom: "0", color: "#000" }}
+                  sx={{
+                    fontSize: "18px",
+                    marginBottom: "5px",
+                    color: "#0b376b",
+                  }}
                 >
-                  {course.name} {renderPricing(course.pricing)}
+                  {course.name}
                 </Typography>
+
                 <Typography
                   variant="subtitle1"
                   gutterBottom
                   component="div"
-                  sx={{ fontSize: "14px", lineHeight: "16px" }}
+                  sx={{
+                    fontSize: "14px",
+                    lineHeight: "16px",
+                    marginBottom: "8px",
+                  }}
                 >
                   {course.description}
                 </Typography>
