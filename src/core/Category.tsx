@@ -246,7 +246,7 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "center",
+                  justifyContent: "start",
                 }}
               >
                 {renderPricing(course.pricing)}

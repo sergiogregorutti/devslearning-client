@@ -63,7 +63,7 @@ const ListCourses = () => {
       <ToastContainer />
 
       <Grid container justifyContent="center" spacing={2}>
-        <Grid item lg={6}>
+        <Grid item lg={10}>
           <Typography
             variant="h1"
             component="div"
