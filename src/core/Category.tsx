@@ -1,11 +1,21 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { getCategory, getFilteredCourses } from "../core/api";
 import Layout from "./Layout";
 import { useTheme } from "@mui/material/styles";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import { Button, Grid, Typography, useMediaQuery } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Grid,
+  Radio,
+  RadioGroup,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 
 interface MatchParams {
   categoryId: string;
@@ -35,15 +45,48 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
   const [myFilters, setMyFilters] = useState<any>({
     filters: { category: "" },
   });
+  const [sortBy, setSortBy] = useState<any>("priceHighToLow");
   const [category, setCategory] = useState<ICategory>();
   const limit = 6;
   const [skip, setSkip] = useState(0);
   const [size, setSize] = useState(0);
   const [filteredResults, setFilteredResults] = useState<any>([]);
 
+  const generateSorting = (value: String) => {
+    switch (value) {
+      case "priceHighToLow":
+        return {
+          sortBy: "price",
+          order: "desc",
+        };
+      case "priceLowToHigh":
+        return {
+          sortBy: "price",
+          order: "asc",
+        };
+      case "newest":
+        return {
+          sortBy: "year",
+          order: "desc",
+        };
+      default:
+        return {
+          sortBy: "price",
+          order: "desc",
+        };
+    }
+  };
+
   const loadMore = () => {
     const toSkip = skip + limit;
-    getFilteredCourses(toSkip, limit, myFilters.filters).then((data) => {
+    const sorting = generateSorting(sortBy);
+    getFilteredCourses(
+      toSkip,
+      limit,
+      myFilters.filters,
+      sorting.sortBy,
+      sorting.order
+    ).then((data) => {
       if (data.error) {
         toast.error("There is an error loading the courses");
       } else {
@@ -70,11 +113,17 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
   }, []);
 
   const handleFilters = (filters: any, filterBy: string) => {
-    // console.log("SHOP", filters, filterBy);
+    const sorting = generateSorting(sortBy);
     const newFilters = { ...myFilters };
     newFilters.filters[filterBy] = filters;
 
-    loadFilteredResults(skip, limit, myFilters.filters);
+    loadFilteredResults(
+      skip,
+      limit,
+      myFilters.filters,
+      sorting.sortBy,
+      sorting.order
+    );
     setMyFilters(newFilters);
   };
 
@@ -87,15 +136,24 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
         setCategory(data);
       }
     });
-    loadFilteredResults(skip, limit, myFilters.filters);
+    const sorting = generateSorting(sortBy);
+    loadFilteredResults(
+      skip,
+      limit,
+      myFilters.filters,
+      sorting.sortBy,
+      sorting.order
+    );
   };
 
   const loadFilteredResults = (
     skip: Number,
     limit: Number,
-    newFilters: any
+    newFilters: any,
+    sortBy: String,
+    order: String
   ) => {
-    getFilteredCourses(skip, limit, newFilters).then((data) => {
+    getFilteredCourses(skip, limit, newFilters, sortBy, order).then((data) => {
       if (data.error) {
         toast.error("There is an error loading the courses");
       } else {
@@ -159,6 +217,19 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
     }
   };
 
+  const handleSortByChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    const sorting = generateSorting(value);
+    loadFilteredResults(
+      skip,
+      limit,
+      myFilters.filters,
+      sorting.sortBy,
+      sorting.order
+    );
+    setSortBy(value);
+  };
+
   return (
     <Layout>
       <ToastContainer />
@@ -208,6 +279,34 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
         </Grid>
       </Grid>
       <Grid container justifyContent="center">
+        <Grid item sm={9} sx={{ marginBottom: "10px" }}>
+          <FormControl component="fieldset">
+            <FormLabel component="legend">Sort By</FormLabel>
+            <RadioGroup
+              row
+              aria-label="sort-by"
+              value={sortBy}
+              onChange={handleSortByChange}
+              name="row-radio-buttons-group"
+            >
+              <FormControlLabel
+                value="priceHighToLow"
+                control={<Radio />}
+                label="Price: High to Low"
+              />
+              <FormControlLabel
+                value="priceLowToHigh"
+                control={<Radio />}
+                label="Price: Low to High"
+              />
+              <FormControlLabel
+                value="newest"
+                control={<Radio />}
+                label="Newest"
+              />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
         <Grid item sm={9}>
           {filteredResults.map((course: ICourse, i: number) => (
             <Grid

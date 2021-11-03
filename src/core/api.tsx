@@ -21,12 +21,16 @@ export const getCategory = (categoryId: String) => {
 export const getFilteredCourses = (
   skip: Number,
   limit: Number,
-  filters = {}
+  filters = {},
+  sortBy: String = "price",
+  order: String = "desc"
 ) => {
   const data = {
     limit,
     skip,
     filters,
+    sortBy,
+    order,
   };
   return fetch(`${process.env.REACT_APP_API}/courses/by/search`, {
     method: "POST",
