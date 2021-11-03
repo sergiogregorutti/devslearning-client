@@ -11,8 +11,12 @@ import {
   FormControlLabel,
   FormLabel,
   Grid,
+  InputLabel,
+  MenuItem,
   Radio,
   RadioGroup,
+  Select,
+  SelectChangeEvent,
   Typography,
   useMediaQuery,
 } from "@mui/material";
@@ -217,7 +221,9 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
     }
   };
 
-  const handleSortByChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSortByChange = (
+    event: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent
+  ) => {
     const value = event.target.value;
     const sorting = generateSorting(value);
     loadFilteredResults(
@@ -278,16 +284,21 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
           </Typography>
         </Grid>
       </Grid>
-      <Grid container justifyContent="center">
-        <Grid item sm={9} sx={{ marginBottom: "10px" }}>
-          <FormControl component="fieldset">
+      <Grid container justifyContent="center" sx={{ alignItems: "left" }}>
+        <Grid item sm={9} sx={{ marginBottom: "10px", width: "100%" }}>
+          <FormControl
+            component="fieldset"
+            sx={{
+              display: { xs: "none", sm: "block" },
+            }}
+          >
             <FormLabel component="legend">Sort By</FormLabel>
             <RadioGroup
               row
-              aria-label="sort-by"
+              aria-label="sort-by-radio"
               value={sortBy}
               onChange={handleSortByChange}
-              name="row-radio-buttons-group"
+              name="sort-by-radio"
             >
               <FormControlLabel
                 value="priceHighToLow"
@@ -305,6 +316,26 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
                 label="Newest"
               />
             </RadioGroup>
+          </FormControl>
+          <FormControl
+            variant="standard"
+            margin="dense"
+            sx={{
+              display: { xs: "block", sm: "none" },
+            }}
+          >
+            <InputLabel id="sort-by-select">Sort By</InputLabel>
+            <Select
+              labelId="sort-by-select"
+              id="sort-by-select"
+              value={sortBy}
+              label="SortBy"
+              onChange={handleSortByChange}
+            >
+              <MenuItem value="priceHighToLow">Price: High to Low</MenuItem>
+              <MenuItem value="priceLowToHigh">Price: Low to High</MenuItem>
+              <MenuItem value="newest">Newest</MenuItem>
+            </Select>
           </FormControl>
         </Grid>
         <Grid item sm={9}>
