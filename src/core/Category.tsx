@@ -20,6 +20,8 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
+import ReactGA from "react-ga";
+ReactGA.initialize("UA-165328952-2");
 
 interface MatchParams {
   categoryId: string;
@@ -138,6 +140,7 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
         toast.error("There is an error loading the category");
       } else {
         setCategory(data);
+        ReactGA.pageview(`Category | ${data.name}`);
       }
     });
     const sorting = generateSorting(sortBy);

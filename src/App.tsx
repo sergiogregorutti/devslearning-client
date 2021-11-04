@@ -11,7 +11,7 @@ import {
 import { Link as RouterLink } from "react-router-dom";
 import { getCategories } from "./core/api";
 import ReactGA from "react-ga";
-ReactGA.initialize("G-XDY9J6E489");
+ReactGA.initialize("UA-165328952-2");
 
 const App = () => {
   const theme = useTheme();
