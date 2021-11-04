@@ -53,7 +53,7 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
   });
   const [sortBy, setSortBy] = useState<any>("priceHighToLow");
   const [category, setCategory] = useState<ICategory>();
-  const limit = 6;
+  const limit = 5;
   const [skip, setSkip] = useState(0);
   const [size, setSize] = useState(0);
   const [filteredResults, setFilteredResults] = useState<any>([]);
@@ -107,9 +107,27 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
     return (
       size > 0 &&
       size >= limit && (
-        <button onClick={loadMore} className="btn btn-warning mb-5">
-          Load more
-        </button>
+        <Grid container justifyContent="center" sx={{ alignItems: "center" }}>
+          <Grid
+            item
+            sm={9}
+            sx={{
+              marginBottom: "10px",
+              width: "100%",
+              justifyContent: "center",
+              display: "flex",
+            }}
+          >
+            <Button
+              variant="contained"
+              onClick={loadMore}
+              size="small"
+              sx={{ width: "auto" }}
+            >
+              Load More
+            </Button>
+          </Grid>
+        </Grid>
       )
     );
   };
@@ -230,13 +248,14 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
     const value = event.target.value;
     const sorting = generateSorting(value);
     loadFilteredResults(
-      skip,
+      0,
       limit,
       myFilters.filters,
       sorting.sortBy,
       sorting.order
     );
     setSortBy(value);
+    setSkip(0);
   };
 
   return (
