@@ -8,6 +8,16 @@ export const getCategories = () => {
     .catch((err) => console.log(err));
 };
 
+export const getCategoriesEs = () => {
+  return fetch(`${process.env.REACT_APP_API}/es/categories`, {
+    method: "GET",
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
 export const getCategory = (categoryId: String) => {
   return fetch(`${process.env.REACT_APP_API}/category/${categoryId}`, {
     method: "GET",

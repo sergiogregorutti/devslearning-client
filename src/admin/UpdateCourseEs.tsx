@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../core/Layout";
 import { isAuth } from "../auth/helpers";
-import { Link as RouterLink } from "react-router-dom";
-import { createCourse, getCategories } from "./api";
+import { Link as RouterLink, RouteComponentProps } from "react-router-dom";
+import {
+  getCourseEs as getCourse,
+  getCategoriesEs as getCategories,
+  updateCourseEs as updateCourse,
+} from "./api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import {
@@ -10,55 +14,98 @@ import {
   Typography,
   TextField,
   Button,
-  MenuItem,
   FormControl,
   InputLabel,
+  Select,
+  MenuItem,
   FormLabel,
   RadioGroup,
-  Radio,
   FormControlLabel,
+  Radio,
 } from "@mui/material";
-import Select from "@mui/material/Select";
 
-const AddCourse = () => {
-  const [values, setValues] = useState<any>({
+interface MatchParams {
+  courseId: string;
+}
+
+interface ICourse {
+  _id: string;
+  name: string;
+  description: string;
+  platform: string;
+  author: string;
+  pricing: string;
+  price: Number;
+  categories: string[];
+  category: any;
+  year: Number;
+  link: string;
+  formData?: any;
+}
+
+const UpdateCourseEs = ({ match }: RouteComponentProps<MatchParams>) => {
+  const [values, setValues] = useState<ICourse>({
+    _id: "",
     name: "",
     description: "",
     platform: "",
     author: "",
     pricing: "",
-    price: "",
+    price: 0,
     categories: [],
     category: "",
-    photo: "",
-    year: "",
+    year: 2021,
     link: "",
-    formData: "",
   });
+  const [categories, setCategories] = useState([]);
 
   const { token } = isAuth();
   const {
+    _id,
+    category,
     name,
     description,
     platform,
     author,
     pricing,
     price,
-    category,
-    categories,
     year,
     link,
     formData,
   } = values;
 
-  const init = () => {
+  const init = (courseId: String) => {
+    initCategories(courseId);
+  };
+
+  const initCategories = (courseId: String) => {
     getCategories().then((data) => {
       if (data.error) {
         toast.error("Error loading categories");
       } else {
+        setCategories(data);
+        initCourse(courseId);
+      }
+    });
+  };
+
+  const initCourse = (courseId: String) => {
+    getCourse(courseId).then((data: any) => {
+      if (data.error) {
+        toast.error("There is an error loading the course");
+      } else {
         setValues({
           ...values,
-          categories: data,
+          _id: data._id,
+          name: data.name,
+          description: data.description,
+          platform: data.platform,
+          author: data.author,
+          pricing: data.pricing,
+          price: data.price,
+          category: data.category._id,
+          year: data.year,
+          link: data.link,
           formData: new FormData(),
         });
       }
@@ -66,7 +113,7 @@ const AddCourse = () => {
   };
 
   useEffect(() => {
-    init();
+    init(match.params.courseId);
   }, []);
 
   const handleChange = (name: string) => (event: any) => {
@@ -78,28 +125,16 @@ const AddCourse = () => {
   const clickSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    createCourse(token, formData).then((data) => {
+    updateCourse(match.params.courseId, token, formData).then((data: any) => {
       if (data.error) {
-        toast.error("Please, fill all fields");
+        toast.error("The new course name already exist");
       } else {
-        setValues({
-          ...values,
-          name: "",
-          description: "",
-          platform: "",
-          author: "",
-          photo: "",
-          pricing: "",
-          year: "",
-          link: "",
-          price: "",
-        });
-        toast.success("Course is created");
+        toast.success("Course updated");
       }
     });
   };
 
-  const newCourseForm = () => (
+  const updateCourseFom = () => (
     <form onSubmit={clickSubmit}>
       <Grid container justifyContent="center" spacing={2}>
         <Grid item lg={10}>
@@ -120,6 +155,17 @@ const AddCourse = () => {
                 ))}
             </Select>
           </FormControl>
+          {_id && (
+            <img
+              src={`${process.env.REACT_APP_API}/course/photo/${_id}`}
+              alt={name}
+              style={{
+                height: "50px",
+                marginTop: "20px",
+                marginBottom: "-10px",
+              }}
+            />
+          )}
           <TextField
             fullWidth
             onChange={handleChange("photo")}
@@ -133,7 +179,6 @@ const AddCourse = () => {
             fullWidth
             onChange={handleChange("name")}
             type="text"
-            name="name"
             value={name}
             label="Name"
             variant="standard"
@@ -231,12 +276,12 @@ const AddCourse = () => {
                 marginRight: "15px",
               }}
             >
-              Create
+              Update
             </Button>
             <Button
               variant="outlined"
               component={RouterLink}
-              to={"/admin/courses"}
+              to={"/admin/es/courses"}
             >
               Go Back
             </Button>
@@ -258,13 +303,13 @@ const AddCourse = () => {
             gutterBottom
             sx={{ textAlign: "center", marginBottom: "40px" }}
           >
-            Create Course
+            Update Course (Spanish)
           </Typography>
-          {newCourseForm()}
+          {updateCourseFom()}
         </Grid>
       </Grid>
     </Layout>
   );
 };
 
-export default AddCourse;
+export default UpdateCourseEs;

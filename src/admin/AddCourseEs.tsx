@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import Layout from "../core/Layout";
 import { isAuth } from "../auth/helpers";
 import { Link as RouterLink } from "react-router-dom";
-import { createCourse, getCategories } from "./api";
+import {
+  createCourseEs as createCourse,
+  getCategoriesEs as getCategories,
+} from "./api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import {
@@ -20,7 +23,7 @@ import {
 } from "@mui/material";
 import Select from "@mui/material/Select";
 
-const AddCourse = () => {
+const AddCourseEs = () => {
   const [values, setValues] = useState<any>({
     name: "",
     description: "",
@@ -236,7 +239,7 @@ const AddCourse = () => {
             <Button
               variant="outlined"
               component={RouterLink}
-              to={"/admin/courses"}
+              to={"/admin/es/courses"}
             >
               Go Back
             </Button>
@@ -258,7 +261,7 @@ const AddCourse = () => {
             gutterBottom
             sx={{ textAlign: "center", marginBottom: "40px" }}
           >
-            Create Course
+            Create Course (Spanish)
           </Typography>
           {newCourseForm()}
         </Grid>
@@ -267,4 +270,4 @@ const AddCourse = () => {
   );
 };
 
-export default AddCourse;
+export default AddCourseEs;
