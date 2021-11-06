@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from "react";
+import { useTheme } from "@mui/material/styles";
 import {
   Container,
   AppBar,
   Toolbar,
   Button,
-  IconButton,
-  Drawer,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
+  // IconButton,
+  // Drawer,
+  // Accordion,
+  // AccordionSummary,
+  // AccordionDetails,
   Menu,
   MenuItem,
   Select,
+  useMediaQuery,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+// import MenuIcon from "@mui/icons-material/Menu";
+// import CloseIcon from "@mui/icons-material/Close";
+// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Link as RouterLink,
   Redirect,
@@ -34,7 +36,9 @@ interface HeaderProps {
   history: RouteComponentProps["history"];
 }
 
-export default function Header({ history }: HeaderProps) {
+export default function HeaderEs({ history }: HeaderProps) {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const [state, setState] = useState({
     mobileView: false,
     drawerOpen: false,
@@ -43,7 +47,8 @@ export default function Header({ history }: HeaderProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [language, setLanguage] = useState("en");
 
-  const { mobileView, drawerOpen } = state;
+  // const { mobileView, drawerOpen } = state;
+  const { mobileView } = state;
 
   useEffect(() => {
     setHeadersData(generateHeadersData(history));
@@ -157,28 +162,10 @@ export default function Header({ history }: HeaderProps) {
                     Courses
                   </Button>
                 </div>
-                <div>
-                  <Button
-                    component={RouterLink}
-                    to={"/admin/es/categories"}
-                    sx={{ textTransform: "none" }}
-                  >
-                    Categories (ES)
-                  </Button>
-                </div>
-                <div>
-                  <Button
-                    component={RouterLink}
-                    to={"/admin/es/courses"}
-                    sx={{ textTransform: "none" }}
-                  >
-                    Courses (ES)
-                  </Button>
-                </div>
               </Menu>
             </>
           )}
-          {/* getMenuButtons() */}
+          {isAuth() && isAuth().role === "admin" && getMenuButtons()}
 
           <Select
             labelId="demo-simple-select-label"
@@ -211,10 +198,12 @@ export default function Header({ history }: HeaderProps) {
   };
 
   const displayMobile = () => {
+    /*
     const handleDrawerOpen = () =>
       setState((prevState) => ({ ...prevState, drawerOpen: true }));
     const handleDrawerClose = () =>
       setState((prevState) => ({ ...prevState, drawerOpen: false }));
+    */
 
     return (
       <Toolbar
@@ -226,6 +215,44 @@ export default function Header({ history }: HeaderProps) {
       >
         <div>{devsLearningLogo}</div>
 
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={language}
+          onChange={handleLanguageChange}
+          sx={{
+            height: { xs: "36px", sm: "42px" },
+            marginLeft: "10px",
+            backgroundColor: "#f7f7f7",
+            ".MuiSelect-select": {
+              padding: { xs: "9px 24px 9px 9px", sm: "9px 32px 9px 9px" },
+              img: {
+                position: "relative",
+                top: "3px",
+              },
+            },
+            "MuiSvgIcon-root": {
+              right: { xs: "1px", sm: "7px" },
+            },
+          }}
+        >
+          <MenuItem value="en">
+            {matches ? (
+              <img height="26" src="/img/english.png" />
+            ) : (
+              <img height="20" src="/img/english.png" />
+            )}
+          </MenuItem>
+          <MenuItem value="es">
+            {matches ? (
+              <img height="26" src="/img/spanish.png" />
+            ) : (
+              <img height="20" src="/img/spanish.png" />
+            )}
+          </MenuItem>
+        </Select>
+
+        {/*
         <IconButton
           {...{
             edge: "start",
@@ -288,24 +315,6 @@ export default function Header({ history }: HeaderProps) {
                         Courses
                       </Button>
                     </div>
-                    <div>
-                      <Button
-                        component={RouterLink}
-                        to={"/admin/es/categories"}
-                        sx={{ textTransform: "none" }}
-                      >
-                        Categories (ES)
-                      </Button>
-                    </div>
-                    <div>
-                      <Button
-                        component={RouterLink}
-                        to={"/admin/es/courses"}
-                        sx={{ textTransform: "none" }}
-                      >
-                        Courses (ES)
-                      </Button>
-                    </div>
                   </AccordionDetails>
                 </Accordion>
               </>
@@ -313,21 +322,29 @@ export default function Header({ history }: HeaderProps) {
             {getDrawerChoices()}
           </div>
         </Drawer>
+        */}
       </Toolbar>
     );
   };
 
   const devsLearningLogo = (
     <RouterLink to="/">
-      <img
-        height="30"
-        src="/img/logo-isologo.svg"
-        style={{ marginTop: "12px" }}
-      />
+      {matches ? (
+        <img
+          height="30"
+          src="/img/logo-isologo.svg"
+          style={{ marginTop: "12px" }}
+        />
+      ) : (
+        <img
+          height="25"
+          src="/img/logo-isologo.svg"
+          style={{ marginTop: "12px" }}
+        />
+      )}
     </RouterLink>
   );
 
-  /*
   const getMenuButtons = () => {
     return headersData.map(({ label, href, variant, callback }: IMenuItem) => {
       if (callback !== undefined) {
@@ -361,8 +378,8 @@ export default function Header({ history }: HeaderProps) {
       }
     });
   };
-  */
 
+  /*
   const getDrawerChoices = () => {
     if (headersData) {
       return headersData.map(({ label, href, variant, callback }) => {
@@ -395,6 +412,7 @@ export default function Header({ history }: HeaderProps) {
       });
     }
   };
+  */
 
   const handleLanguageChange = (event: any) => {
     setLanguage(event.target.value);
