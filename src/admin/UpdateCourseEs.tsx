@@ -91,6 +91,7 @@ const UpdateCourseEs = ({ match }: RouteComponentProps<MatchParams>) => {
 
   const initCourse = (courseId: String) => {
     getCourse(courseId).then((data: any) => {
+      console.log("data", data);
       if (data.error) {
         toast.error("There is an error loading the course");
       } else {
@@ -157,7 +158,7 @@ const UpdateCourseEs = ({ match }: RouteComponentProps<MatchParams>) => {
           </FormControl>
           {_id && (
             <img
-              src={`${process.env.REACT_APP_API}/course/photo/${_id}`}
+              src={`${process.env.REACT_APP_API}/es/course/photo/${_id}`}
               alt={name}
               style={{
                 height: "50px",

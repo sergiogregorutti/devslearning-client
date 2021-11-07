@@ -162,6 +162,24 @@ export default function HeaderEs({ history }: HeaderProps) {
                     Courses
                   </Button>
                 </div>
+                <div>
+                  <Button
+                    component={RouterLink}
+                    to={"/admin/es/categories"}
+                    sx={{ textTransform: "none" }}
+                  >
+                    Categories (ES)
+                  </Button>
+                </div>
+                <div>
+                  <Button
+                    component={RouterLink}
+                    to={"/admin/es/courses"}
+                    sx={{ textTransform: "none" }}
+                  >
+                    Courses (ES)
+                  </Button>
+                </div>
               </Menu>
             </>
           )}

@@ -328,7 +328,7 @@ export default function HeaderEs({ history }: HeaderProps) {
   };
 
   const devsLearningLogo = (
-    <RouterLink to="/">
+    <RouterLink to="/es/">
       {matches ? (
         <img
           height="30"

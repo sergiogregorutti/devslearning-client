@@ -28,6 +28,16 @@ export const getCategory = (categoryId: String) => {
     .catch((err) => console.log(err));
 };
 
+export const getCategoryEs = (categoryId: String) => {
+  return fetch(`${process.env.REACT_APP_API}/es/category/${categoryId}`, {
+    method: "GET",
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
 export const getFilteredCourses = (
   skip: Number,
   limit: Number,
@@ -43,6 +53,36 @@ export const getFilteredCourses = (
     order,
   };
   return fetch(`${process.env.REACT_APP_API}/courses/by/search`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const getFilteredCoursesEs = (
+  skip: Number,
+  limit: Number,
+  filters = {},
+  sortBy: String = "price",
+  order: String = "desc"
+) => {
+  const data = {
+    limit,
+    skip,
+    filters,
+    sortBy,
+    order,
+  };
+  return fetch(`${process.env.REACT_APP_API}/es/courses/by/search`, {
     method: "POST",
     headers: {
       Accept: "application/json",

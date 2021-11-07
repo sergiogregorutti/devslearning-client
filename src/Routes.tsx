@@ -6,6 +6,7 @@ import Signin from "./auth/Signin";
 import Activate from "./auth/Activate";
 import MyAccount from "./core/MyAccount";
 import Category from "./core/Category";
+import CategoryEs from "./core/CategoryEs";
 import Admin from "./core/Admin";
 import ListCategories from "./admin/ListCategories";
 import ListCategoriesEs from "./admin/ListCategoriesEs";
@@ -42,6 +43,7 @@ const Routes = () => {
 
         {/* Category */}
         <Route path="/categories/:categoryId" component={Category} />
+        <Route path="/es/categories/:categoryId" component={CategoryEs} />
 
         {/* Admin */}
         <AdminRoute path="/admin" exact component={Admin} />
