@@ -162,7 +162,7 @@ const CategoryEs = ({ match }: RouteComponentProps<MatchParams>) => {
         toast.error("Ocurrió un error cargando la categoría");
       } else {
         setCategory(data);
-        ReactGA.pageview(`Category | ${data.name}`);
+        ReactGA.pageview(`Category | ES | ${data.name}`);
       }
     });
     const sorting = generateSorting(sortBy);
