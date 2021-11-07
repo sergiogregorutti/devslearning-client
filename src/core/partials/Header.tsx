@@ -23,7 +23,7 @@ import {
   Redirect,
   RouteComponentProps,
 } from "react-router-dom";
-import { isAuth, signout } from "../../auth/helpers";
+import { isAuth, signout, setCookie, getCookie } from "../../auth/helpers";
 
 interface IMenuItem {
   label: string;
@@ -45,7 +45,7 @@ export default function HeaderEs({ history }: HeaderProps) {
   });
   const [headersData, setHeadersData] = useState<IMenuItem[]>([]);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [language, setLanguage] = useState("en");
+  const [language, setLanguage] = useState(getCookie("language") || "en");
 
   // const { mobileView, drawerOpen } = state;
   const { mobileView } = state;
@@ -433,6 +433,7 @@ export default function HeaderEs({ history }: HeaderProps) {
   */
 
   const handleLanguageChange = (event: any) => {
+    setCookie("language", event.target.value);
     setLanguage(event.target.value);
   };
 

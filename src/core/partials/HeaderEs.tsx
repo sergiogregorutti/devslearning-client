@@ -23,7 +23,7 @@ import {
   Redirect,
   RouteComponentProps,
 } from "react-router-dom";
-import { isAuth, signout } from "../../auth/helpers";
+import { isAuth, signout, setCookie } from "../../auth/helpers";
 
 interface IMenuItem {
   label: string;
@@ -415,6 +415,7 @@ export default function HeaderEs({ history }: HeaderProps) {
   */
 
   const handleLanguageChange = (event: any) => {
+    setCookie("language", event.target.value);
     setLanguage(event.target.value);
   };
 
