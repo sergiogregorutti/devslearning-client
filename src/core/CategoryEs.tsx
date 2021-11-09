@@ -365,7 +365,11 @@ const CategoryEs = ({ match }: RouteComponentProps<MatchParams>) => {
           </FormControl>
           <Alert
             severity="info"
-            sx={{ fontSize: "12px", borderRadius: "10px" }}
+            sx={{
+              fontSize: "12px",
+              borderRadius: "10px",
+              marginTop: { xs: "10px", sm: "0" },
+            }}
           >
             Los precios estan expresados en Dolares Estadounidenses y algunos
             son aproximados según el precio en la moneda local.
@@ -478,7 +482,7 @@ const CategoryEs = ({ match }: RouteComponentProps<MatchParams>) => {
                       marginRight: "10px",
                     }}
                   >
-                    <strong>Precio:</strong> U$ {course.price}
+                    <strong>Precio:</strong> US$ {course.price}
                   </Typography>
                   {course.year && (
                     <Typography

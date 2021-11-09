@@ -467,7 +467,7 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
                       marginRight: "10px",
                     }}
                   >
-                    <strong>Price:</strong> ${course.price}
+                    <strong>Price:</strong> US$ {course.price}
                   </Typography>
                   {course.year && (
                     <Typography
