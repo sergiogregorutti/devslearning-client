@@ -131,7 +131,7 @@ const App = () => {
           What do you want to learn?
         </Typography>
 
-        <Grid container justifyContent="center" spacing={4}>
+        <Grid container spacing={4}>
           {categories &&
             categories.map((category: any) => (
               <Grid item key={category.name} xs={12} sm={6} lg={3}>
