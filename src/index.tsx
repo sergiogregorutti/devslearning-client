@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./theme";
-import Routes from "./Routes";
+import Routes from "./routes/Routes";
 import CssBaseline from "@mui/material/CssBaseline";
 
 ReactDOM.render(

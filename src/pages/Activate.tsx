@@ -1,5 +1,5 @@
 import { useState, useEffect, MouseEvent } from "react";
-import Layout from "../core/Layout";
+import Layout from "../components/layout/Layout";
 import axios from "axios";
 import jwt from "jsonwebtoken";
 import { ToastContainer, toast } from "react-toastify";

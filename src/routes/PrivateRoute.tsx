@@ -1,5 +1,5 @@
 import { Route, Redirect } from "react-router-dom";
-import { isAuth } from "./helpers";
+import { isAuth } from "../common/helpers";
 
 const PrivateRoute = ({ children, ...rest }: any) => (
   <Route

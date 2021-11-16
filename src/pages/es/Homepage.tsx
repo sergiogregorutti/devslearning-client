@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import LayoutEs from "./core/LayoutEs";
+import LayoutEs from "../../components/layout/LayoutEs";
 import { useTheme } from "@mui/material/styles";
 import {
   Container,
@@ -9,7 +9,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import { getCategoriesEs as getCategories } from "./core/api";
+import { getCategoriesEs as getCategories } from "../../api/api";
 import ReactGA from "react-ga";
 ReactGA.initialize("UA-165328952-2");
 

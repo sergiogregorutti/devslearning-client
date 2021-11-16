@@ -1,8 +1,8 @@
 import { Fragment, ReactNode } from "react";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { Container } from "@mui/material";
-import Header from "./partials/Header";
-import Footer from "./partials/Footer";
+import Header from "../header/Header";
+import Footer from "../footer/Footer";
 
 interface Props extends RouteComponentProps {
   children: ReactNode;

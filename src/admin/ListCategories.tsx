@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import Layout from "../core/Layout";
-import { isAuth } from "../auth/helpers";
+import Layout from "../components/layout/Layout";
+import { isAuth } from "../common/helpers";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { Link as RouterLink } from "react-router-dom";

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, MouseEvent } from "react";
 import { useParams } from "react-router-dom";
 import jwt from "jsonwebtoken";
-import Layout from "../core/Layout";
+import Layout from "../components/layout/Layout";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";

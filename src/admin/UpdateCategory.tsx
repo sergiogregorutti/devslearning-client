@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../core/Layout";
-import { isAuth } from "../auth/helpers";
+import Layout from "../components/layout/Layout";
+import { isAuth } from "../common/helpers";
 import { Link as RouterLink, RouteComponentProps } from "react-router-dom";
 import { getCategory, updateCategory } from "./api";
 import { ToastContainer, toast } from "react-toastify";

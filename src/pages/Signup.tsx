@@ -1,12 +1,12 @@
 import React, { useState, MouseEvent } from "react";
 import { Redirect, RouteComponentProps } from "react-router-dom";
-import Layout from "../core/Layout";
+import Layout from "../components/layout/Layout";
 import axios, { AxiosResponse } from "axios";
-import { authenticate, isAuth } from "./helpers";
+import { authenticate, isAuth } from "../common/helpers";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Google from "./Google";
-import Facebook from "./Facebook";
+import Google from "../components/social-login/Google";
+import Facebook from "../components/social-login/Facebook";
 import { Grid, Typography, Divider, TextField, Button } from "@mui/material";
 
 const Signup = ({ history }: RouteComponentProps) => {

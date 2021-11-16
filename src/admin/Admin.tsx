@@ -1,8 +1,8 @@
 import React, { useState, useEffect, MouseEvent } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import Layout from "../core/Layout";
+import Layout from "../components/layout/Layout";
 import axios from "axios";
-import { isAuth, getCookie, signout, updateUser } from "../auth/helpers";
+import { isAuth, getCookie, signout, updateUser } from "../common/helpers";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 

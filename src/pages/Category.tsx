@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import { getCategory, getFilteredCourses } from "../core/api";
-import Layout from "./Layout";
+import { getCategory, getFilteredCourses } from "../api/api";
+import Layout from "../components/layout/Layout";
 import { useTheme } from "@mui/material/styles";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";

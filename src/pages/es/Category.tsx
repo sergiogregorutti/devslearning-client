@@ -3,8 +3,8 @@ import { RouteComponentProps } from "react-router-dom";
 import {
   getCategoryEs as getCategory,
   getFilteredCoursesEs as getFilteredCourses,
-} from "../core/api";
-import LayoutEs from "./LayoutEs";
+} from "../../api/api";
+import LayoutEs from "../../components/layout/LayoutEs";
 import { useTheme } from "@mui/material/styles";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";

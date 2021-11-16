@@ -23,7 +23,7 @@ import {
   Redirect,
   RouteComponentProps,
 } from "react-router-dom";
-import { isAuth, signout, setCookie } from "../../auth/helpers";
+import { isAuth, signout, setCookie, getCookie } from "../../common/helpers";
 
 interface IMenuItem {
   label: string;
@@ -45,7 +45,7 @@ export default function HeaderEs({ history }: HeaderProps) {
   });
   const [headersData, setHeadersData] = useState<IMenuItem[]>([]);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [language, setLanguage] = useState("es");
+  const [language, setLanguage] = useState(getCookie("language") || "en");
 
   // const { mobileView, drawerOpen } = state;
   const { mobileView } = state;
@@ -160,6 +160,24 @@ export default function HeaderEs({ history }: HeaderProps) {
                     sx={{ textTransform: "none" }}
                   >
                     Courses
+                  </Button>
+                </div>
+                <div>
+                  <Button
+                    component={RouterLink}
+                    to={"/admin/es/categories"}
+                    sx={{ textTransform: "none" }}
+                  >
+                    Categories (ES)
+                  </Button>
+                </div>
+                <div>
+                  <Button
+                    component={RouterLink}
+                    to={"/admin/es/courses"}
+                    sx={{ textTransform: "none" }}
+                  >
+                    Courses (ES)
                   </Button>
                 </div>
               </Menu>
@@ -328,7 +346,7 @@ export default function HeaderEs({ history }: HeaderProps) {
   };
 
   const devsLearningLogo = (
-    <RouterLink to="/es/">
+    <RouterLink to="/">
       {matches ? (
         <img
           height="30"
@@ -419,8 +437,8 @@ export default function HeaderEs({ history }: HeaderProps) {
     setLanguage(event.target.value);
   };
 
-  if (language === "en") {
-    return <Redirect to="/" />;
+  if (language === "es") {
+    return <Redirect to="/es/" />;
   }
 
   return (
