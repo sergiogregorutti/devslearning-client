@@ -39,15 +39,15 @@ export const getCategoryEs = (categoryId: String) => {
 };
 
 export const getFilteredCourses = (
-  skip: Number,
-  limit: Number,
+  page: Number,
+  size: Number,
   filters = {},
   sortBy: String = "price",
   order: String = "desc"
 ) => {
   const data = {
-    limit,
-    skip,
+    page,
+    size,
     filters,
     sortBy,
     order,

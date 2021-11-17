@@ -53,10 +53,14 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
   });
   const [sortBy, setSortBy] = useState<any>("priceHighToLow");
   const [category, setCategory] = useState<ICategory>();
-  const limit = 5;
-  const [skip, setSkip] = useState(0);
-  const [size, setSize] = useState(0);
+  const size = 5;
+  const [page, setPage] = useState(0);
   const [filteredResults, setFilteredResults] = useState<any>([]);
+  const [pagination, setPagination] = useState<any>({
+    currentPage: 0,
+    totalItems: 0,
+    totalPages: 0,
+  });
 
   const generateSorting = (value: String) => {
     switch (value) {
@@ -84,11 +88,11 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
   };
 
   const loadMore = () => {
-    const toSkip = skip + limit;
+    const nextPage = page + 1;
     const sorting = generateSorting(sortBy);
     getFilteredCourses(
-      toSkip,
-      limit,
+      nextPage,
+      size,
       myFilters.filters,
       sorting.sortBy,
       sorting.order
@@ -96,17 +100,20 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
       if (data.error) {
         toast.error("There is an error loading the courses");
       } else {
-        setFilteredResults([...filteredResults, ...data.data]);
-        setSize(data.size);
-        setSkip(toSkip);
+        setFilteredResults([...filteredResults, ...data.courses]);
+        setPagination({
+          currentPage: data.currentPage,
+          totalItems: data.totalItems,
+          totalPages: data.totalPages,
+        });
+        setPage(nextPage);
       }
     });
   };
 
   const loadMoreButton = () => {
     return (
-      size > 0 &&
-      size >= limit && (
+      pagination.currentPage + 1 < pagination.totalPages && (
         <Grid container justifyContent="center" sx={{ alignItems: "center" }}>
           <Grid
             item
@@ -142,8 +149,8 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
     newFilters.filters[filterBy] = filters;
 
     loadFilteredResults(
-      skip,
-      limit,
+      page,
+      size,
       myFilters.filters,
       sorting.sortBy,
       sorting.order
@@ -161,30 +168,26 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
         ReactGA.pageview(`Category | ${data.name}`);
       }
     });
-    const sorting = generateSorting(sortBy);
-    loadFilteredResults(
-      skip,
-      limit,
-      myFilters.filters,
-      sorting.sortBy,
-      sorting.order
-    );
   };
 
   const loadFilteredResults = (
-    skip: Number,
-    limit: Number,
+    page: Number,
+    size: Number,
     newFilters: any,
     sortBy: String,
     order: String
   ) => {
-    getFilteredCourses(skip, limit, newFilters, sortBy, order).then((data) => {
+    getFilteredCourses(page, size, newFilters, sortBy, order).then((data) => {
       if (data.error) {
         toast.error("There is an error loading the courses");
       } else {
-        setFilteredResults(data.data);
-        setSize(data.size);
-        setSkip(0);
+        setFilteredResults(data.courses);
+        setPagination({
+          currentPage: data.currentPage,
+          totalItems: data.totalItems,
+          totalPages: data.totalPages,
+        });
+        setPage(0);
       }
     });
   };
@@ -249,13 +252,13 @@ const Category = ({ match }: RouteComponentProps<MatchParams>) => {
     const sorting = generateSorting(value);
     loadFilteredResults(
       0,
-      limit,
+      size,
       myFilters.filters,
       sorting.sortBy,
       sorting.order
     );
     setSortBy(value);
-    setSkip(0);
+    setPage(0);
   };
 
   return (
