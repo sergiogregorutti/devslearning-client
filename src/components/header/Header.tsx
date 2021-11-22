@@ -15,6 +15,7 @@ import {
   Select,
   useMediaQuery,
 } from "@mui/material";
+import LanguageIcon from "@mui/icons-material/Language";
 // import MenuIcon from "@mui/icons-material/Menu";
 // import CloseIcon from "@mui/icons-material/Close";
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -185,6 +186,14 @@ export default function HeaderEs({ history }: HeaderProps) {
           )}
           {isAuth() && isAuth().role === "admin" && getMenuButtons()}
 
+          <LanguageIcon
+            sx={{
+              fill: "#000",
+              position: "relative",
+              top: "9px",
+              right: "-12px",
+            }}
+          />
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -193,7 +202,7 @@ export default function HeaderEs({ history }: HeaderProps) {
             sx={{
               height: "42px",
               marginLeft: "10px",
-              backgroundColor: "#f7f7f7",
+              backgroundColor: "transparent",
               ".MuiSelect-select": {
                 padding: "9px 32px 9px 9px",
                 img: {
@@ -201,14 +210,13 @@ export default function HeaderEs({ history }: HeaderProps) {
                   top: "3px",
                 },
               },
+              fieldset: {
+                border: "none",
+              },
             }}
           >
-            <MenuItem value="en">
-              <img height="26" src="/img/english.png" />
-            </MenuItem>
-            <MenuItem value="es">
-              <img height="26" src="/img/spanish.png" />
-            </MenuItem>
+            <MenuItem value="en">EN</MenuItem>
+            <MenuItem value="es">ES</MenuItem>
           </Select>
         </div>
       </Toolbar>
@@ -233,42 +241,45 @@ export default function HeaderEs({ history }: HeaderProps) {
       >
         <div>{devsLearningLogo}</div>
 
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={language}
-          onChange={handleLanguageChange}
-          sx={{
-            height: { xs: "36px", sm: "42px" },
-            marginLeft: "10px",
-            backgroundColor: "#f7f7f7",
-            ".MuiSelect-select": {
-              padding: { xs: "9px 24px 9px 9px", sm: "9px 32px 9px 9px" },
-              img: {
-                position: "relative",
-                top: "3px",
+        <div>
+          <LanguageIcon
+            sx={{
+              fill: "#000",
+              position: "relative",
+              top: "6px",
+              right: "-25px",
+            }}
+          />
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={language}
+            onChange={handleLanguageChange}
+            sx={{
+              height: { xs: "36px", sm: "42px" },
+              marginLeft: "10px",
+              backgroundColor: "transparent",
+              right: "-10px",
+              ".MuiSelect-select": {
+                padding: { xs: "9px 24px 9px 9px", sm: "9px 32px 9px 9px" },
+                paddingRight: { xs: "30px", sm: "32px" },
+                img: {
+                  position: "relative",
+                  top: "3px",
+                },
               },
-            },
-            "MuiSvgIcon-root": {
-              right: { xs: "1px", sm: "7px" },
-            },
-          }}
-        >
-          <MenuItem value="en">
-            {matches ? (
-              <img height="26" src="/img/english.png" />
-            ) : (
-              <img height="20" src="/img/english.png" />
-            )}
-          </MenuItem>
-          <MenuItem value="es">
-            {matches ? (
-              <img height="26" src="/img/spanish.png" />
-            ) : (
-              <img height="20" src="/img/spanish.png" />
-            )}
-          </MenuItem>
-        </Select>
+              "MuiSvgIcon-root": {
+                right: { xs: "1px", sm: "7px" },
+              },
+              fieldset: {
+                border: "none",
+              },
+            }}
+          >
+            <MenuItem value="en">{matches ? "EN" : "EN"}</MenuItem>
+            <MenuItem value="es">{matches ? "ES" : "ES"}</MenuItem>
+          </Select>
+        </div>
 
         {/*
         <IconButton
@@ -355,7 +366,7 @@ export default function HeaderEs({ history }: HeaderProps) {
         />
       ) : (
         <img
-          height="25"
+          height="22"
           src="/img/logo-isologo.svg"
           style={{ marginTop: "12px" }}
         />
