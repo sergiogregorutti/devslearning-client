@@ -23,18 +23,6 @@ export default function Footer() {
           }}
         >
           @sergiogregorutti
-        </a>{" "}
-        | Design and Illustrations by{" "}
-        <a
-          href="https://www.instagram.com/floradeluca.art/"
-          target="_blank"
-          rel="noreferrer"
-          style={{
-            color: "#2097f8",
-            textDecoration: "none",
-          }}
-        >
-          @floradeluca.art
         </a>
       </Typography>
     </Container>
